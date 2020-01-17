@@ -55,10 +55,10 @@ public class MarcheAgent extends Agent {
     	                    double _height = _screenSize.getHeight();
     						Parent root;
 							try {
-								root = FXMLLoader.load(getClass().getResource("../controller/Marche.fxml"));
+								root = FXMLLoader.load(getClass().getResource("agentInterfaces/Marche.fxml"));
 								Stage stage = new Stage();
 	    					    stage.setTitle(myName);
-	    					    stage.setScene(new Scene(root, _width / 5, _height / 5));
+	    					    stage.setScene(new Scene(root));
 	    					    stage.show();
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
