@@ -13,10 +13,10 @@
             <Insets left="10.0" />
          </padding>
       </Label>
-      <TableView layoutY="22.0" prefHeight="265.0" prefWidth="509.0">
+      <TableView fx:id="tableView" layoutY="22.0" prefHeight="265.0" prefWidth="509.0">
          <columns>
-            <TableColumn prefWidth="377.0" text="Enchères" />
-            <TableColumn prefWidth="131.0" text="Montant courant" />
+            <TableColumn fx:id="EnchereCol" prefWidth="377.0" text="Enchères" />
+            <TableColumn fx:id="PrixCol" prefWidth="131.0" text="Montant courant" />
          </columns>
       </TableView>
    </children>
