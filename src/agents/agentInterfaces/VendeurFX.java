@@ -20,7 +20,7 @@ public class VendeurFX extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		root = new BorderPane();
-		Parent root = FXMLLoader.load(getClass().getResource("Marche.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("VendeurInit.fxml"));
 		Scene scene = new Scene(root, 400, 400);
 		primaryStage.setTitle("test");
 		
