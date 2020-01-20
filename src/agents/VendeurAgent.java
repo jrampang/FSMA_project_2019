@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
 
-import agents.agentInterfaces.VendeurFX;
 import controller.VendeurInitController;
 import jade.core.Agent;
 import javafx.application.Platform;
