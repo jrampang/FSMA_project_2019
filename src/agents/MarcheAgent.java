@@ -7,10 +7,15 @@ import java.io.IOException;
 import controller.MarcheController;
 import jade.core.Agent;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import model.Enchere;
 
@@ -22,6 +27,36 @@ public class MarcheAgent extends Agent {
 	protected String myName;
 	protected int step = 0;
 	protected boolean finish = false;
+
+	@FXML
+    private TableView<Enchere> tableView;
+	
+	@FXML
+	private TableColumn<Enchere, String> EnchereCol;
+	
+	@FXML
+	private TableColumn<Enchere, String> PrixCol;
+	
+	private static ObservableList<Enchere> list = FXCollections.observableArrayList();
+
+	public ObservableList<Enchere> getList() {
+		return list;
+	}
+
+	public static void setList(ObservableList<Enchere> inputList) {
+		list = inputList;
+	}
+	
+	public static void addEnchere(Enchere e) {
+		list.add(e);
+	}
+	
+	@FXML
+	public void initialize() {
+		tableView.setItems(list);
+		EnchereCol.setCellValueFactory(cellData -> cellData.getValue().objetProperty());
+		PrixCol.setCellValueFactory(cellData -> cellData.getValue().prixProperty());
+	}
 	
 	@Override
 	protected void setup() {
@@ -71,7 +106,7 @@ public class MarcheAgent extends Agent {
 	                    @Override
 	                    public void run() {
 	                        System.out.println(myName + ": Ce message s'affiche en boucle.");
-	                        MarcheController.addEnchere(new Enchere("enchere", "prix"));
+	                        addEnchere(new Enchere("enchere", "prix"));
 	                    }
 	                };
 
