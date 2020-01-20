@@ -27,36 +27,6 @@ public class MarcheAgent extends Agent {
 	protected String myName;
 	protected int step = 0;
 	protected boolean finish = false;
-
-	@FXML
-    private TableView<Enchere> tableView;
-	
-	@FXML
-	private TableColumn<Enchere, String> EnchereCol;
-	
-	@FXML
-	private TableColumn<Enchere, String> PrixCol;
-	
-	private static ObservableList<Enchere> list = FXCollections.observableArrayList();
-
-	public ObservableList<Enchere> getList() {
-		return list;
-	}
-
-	public static void setList(ObservableList<Enchere> inputList) {
-		list = inputList;
-	}
-	
-	public static void addEnchere(Enchere e) {
-		list.add(e);
-	}
-	
-	@FXML
-	public void initialize() {
-		tableView.setItems(list);
-		EnchereCol.setCellValueFactory(cellData -> cellData.getValue().objetProperty());
-		PrixCol.setCellValueFactory(cellData -> cellData.getValue().prixProperty());
-	}
 	
 	// Max 2 vendeurs en theorie
 	private HashMap<String, Enchere> vendeurAgentList;
@@ -109,12 +79,11 @@ public class MarcheAgent extends Agent {
 
 	                    @Override
 	                    public void run() {
-<<<<<<< HEAD
+
 	                        //System.out.println("from the marche" + getVendeurs());
-=======
+
 	                        System.out.println(myName + ": Ce message s'affiche en boucle.");
 	                        addEnchere(new Enchere("enchere", "prix"));
->>>>>>> branch 'master' of https://github.com/jrampang/FSMA_project_2019.git
 	                    }
 	                };
 
