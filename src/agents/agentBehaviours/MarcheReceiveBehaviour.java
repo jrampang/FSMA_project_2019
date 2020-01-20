@@ -69,9 +69,9 @@ public class MarcheReceiveBehaviour extends Behaviour{
 				System.out.println("Buyer name: " + agentName);
 				
 				String testAgentName = "A1";
-				marche.addVendeur(testAgentName, new Enchere("1 lot de poisson", Integer.toString(15), testAgentName));
-				MarcheController.addEnchere(new Enchere("1 lot de poisson", Integer.toString(15), testAgentName));
-				System.out.println("Market test: " + marche.getVendeurs());
+				marche.addVendeur(testAgentName, new Enchere("1 lot de poisson", Integer.toString(20), testAgentName));
+				MarcheController.addEnchere(new Enchere("1 lot de poisson", Integer.toString(20), testAgentName));
+				
 				
 				if(marche.getVendeurs().size() > 0) {
 					answer.addReceiver(new AID(agentName, AID.ISLOCALNAME));
@@ -87,6 +87,13 @@ public class MarcheReceiveBehaviour extends Behaviour{
 								e.printStackTrace();
 							}
 						});
+					}
+					try {
+						answer.setContentObject(null);
+						myAgent.send(answer);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 			}

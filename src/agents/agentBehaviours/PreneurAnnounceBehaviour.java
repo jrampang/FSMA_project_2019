@@ -1,6 +1,9 @@
 package agents.agentBehaviours;
 
 import agents.PreneurAgent;
+import controller.PreneurAutoController;
+import controller.PreneurChoixController;
+import controller.PreneurManuelController;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -18,9 +21,11 @@ public class PreneurAnnounceBehaviour extends Behaviour{
 	private ACLMessage msgReceived;
 	private ACLMessage query = new ACLMessage(ACLMessage.QUERY_IF);
 	private PreneurAgent owner;
+	private String mode;
 	
-	public PreneurAnnounceBehaviour(PreneurAgent a) {
-		this.owner = a;
+	public PreneurAnnounceBehaviour(PreneurAgent agent, String mode) {
+		this.owner = agent;
+		this.mode = mode;
 	}
 	
 	@Override
@@ -36,16 +41,33 @@ public class PreneurAnnounceBehaviour extends Behaviour{
 		
 		// if i received a message
 		if(msgReceived != null) {
-			// if i received a to_announce
-			// if it's a new seller
-			// i add him and his offer
-			// or update his offer
+			// if i received a update
+			// from the market
+			// i update the my list of offers
 			if(msgReceived.getPerformative() == ACLMessage.INFORM) {
 				System.out.println("The buyer: I received an answer from the market.");
 				try {
-					Enchere e = (Enchere) msgReceived.getContentObject();
-					owner.getEnchereList().add(e);
-					System.out.println("The buyer: " + owner.getEnchereList());
+					if(msgReceived.getContentObject() != null) {
+						Enchere e = (Enchere) msgReceived.getContentObject();
+						owner.getEnchereList().add(e);
+						//System.out.println("The buyer: " + owner.getEnchereList());
+						if(mode.contains("auto")) {
+							PreneurAutoController.addEnchere(e);
+						}
+						if(mode.contains("manuel")) {
+							PreneurManuelController.addEnchere(e);
+						}
+						if(mode.contains("choix")) {
+							PreneurChoixController.addEnchere(e);
+						}
+						else {
+							PreneurChoixController.addEnchere(e);
+						}
+					}
+					else {
+						System.out.println("The buyer: the market send me all the offers.");
+						finish = true;
+					}
 				} catch (UnreadableException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

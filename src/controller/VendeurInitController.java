@@ -34,7 +34,18 @@ public class VendeurInitController {
 		    public void handle(ActionEvent event) {
 		        //fermer cette fenetre et ouvrir la fenetre Vendeur
 		    	creerEnchere.getScene().getWindow().hide();
-		    	agent.addBehaviour(new VendeurAnnounceBehaviour(prix.getText(), Integer.parseInt(timer.getText()), Integer.parseInt(increment.getText()), Integer.parseInt(decrement.getText())));
+		    	
+		    	if(agent != null) {
+		    		agent.addBehaviour(new VendeurAnnounceBehaviour(
+		    				prix.getText(),
+		    				Integer.parseInt(timer.getText()),
+		    				Integer.parseInt(increment.getText()),
+		    				Integer.parseInt(decrement.getText())
+		    		));	
+		    	}
+		    	else {
+		    		System.out.println("VendeurInitController: agent is null.");
+		    	}
 		    }
 		});
 	}

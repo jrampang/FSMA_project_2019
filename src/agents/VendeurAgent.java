@@ -72,7 +72,8 @@ public class VendeurAgent extends Agent {
 	
 	public void creerEnchere() {
 		new JFXPanel();
-	VendeurAgent self = this;
+		VendeurAgent self = this;
+		System.out.println("creerEnchere: self is" + self);
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {

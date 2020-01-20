@@ -1,5 +1,6 @@
 package controller;
 
+import agents.PreneurAgent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,6 +20,8 @@ public class PreneurAutoController {
 	private TableColumn<Enchere, String> PrixCol;
 	
 	private static ObservableList<Enchere> list = FXCollections.observableArrayList();
+	
+	private PreneurAgent agent;
 
 	public ObservableList<Enchere> getList() {
 		return list;
@@ -30,6 +33,10 @@ public class PreneurAutoController {
 	
 	public static void addEnchere(Enchere e) {
 		list.add(e);
+	}
+	
+	public void setAgent(PreneurAgent agent) {
+		this.agent = agent;
 	}
 	
 	@FXML

@@ -19,7 +19,7 @@
           <TableColumn fx:id="PrixCol" prefWidth="131.0" text="Montant courant" />
         </columns>
       </TableView>
-      <Button fx:id="lancerEnchere" layoutX="324.0" layoutY="241.0" mnemonicParsing="false" text="Enchérir" />
+      <Button fx:id="lancerEnchere" layoutX="324.0" layoutY="241.0" mnemonicParsing="false" text="Choisir" />
       <ChoiceBox fx:id="mode" layoutX="81.0" layoutY="241.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

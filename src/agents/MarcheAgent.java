@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import agents.agentBehaviours.MarcheReceiveBehaviour;
+import controller.MarcheController;
+import controller.PreneurChoixController;
 import jade.core.Agent;
 
 import javafx.application.Platform;
@@ -27,6 +29,11 @@ public class MarcheAgent extends Agent {
 	private HashMap<String, Enchere> vendeurAgentList;
 	//private ArrayList<String> preneurAgentList;
 	
+	private Parent root;
+	private Stage stage;
+	
+	private MarcheController controller;
+	
 	@Override
 	protected void setup() {
 		System.out.println("Hello! Agent "+getAID().getName()+" is ready.");
@@ -42,7 +49,7 @@ public class MarcheAgent extends Agent {
 			// Printout the name
 		    System.out.println("My name is "+myName);
 		    
-		    addBehaviour(new MarcheReceiveBehaviour(this));
+		    //addBehaviour(new MarcheReceiveBehaviour(this));
 		    
 		    new Thread() {
 	            @Override
@@ -52,10 +59,9 @@ public class MarcheAgent extends Agent {
             		Platform.runLater(new Runnable() {
             			@Override
             			public void run() {
-    						Parent root;
 							try {
 								root = FXMLLoader.load(getClass().getResource("agentInterfaces/Marche.fxml"));
-								Stage stage = new Stage();
+								stage = new Stage();
 	    					    stage.setTitle(myName);
 	    					    stage.setScene(new Scene(root));
 	    					    stage.show();

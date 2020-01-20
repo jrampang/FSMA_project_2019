@@ -1,8 +1,16 @@
 package controller;
 
+import java.io.IOException;
+
+import agents.PreneurAgent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
@@ -23,6 +31,8 @@ public class PreneurManuelController {
 	private Button rencherir;
 	
 	private static ObservableList<Enchere> list = FXCollections.observableArrayList();
+	
+	private PreneurAgent agent;
 
 	public ObservableList<Enchere> getList() {
 		return list;
@@ -36,11 +46,22 @@ public class PreneurManuelController {
 		list.add(e);
 	}
 	
+	public void setAgent(PreneurAgent agent) {
+		this.agent = agent;
+	}
+	
 	@FXML
 	public void initialize() {
 		tableView.setItems(list);
 		EnchereCol.setCellValueFactory(cellData -> cellData.getValue().objetProperty());
 		PrixCol.setCellValueFactory(cellData -> cellData.getValue().prixProperty());
 		tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		
+		rencherir.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		        System.out.println("ManuelController: i have (surencherit).");
+		    }
+		});
 	}
 }
