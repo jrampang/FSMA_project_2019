@@ -17,10 +17,10 @@
       <Label layoutX="12.0" layoutY="108.0" text="Temps d'attente en seconde" />
       <Label layoutX="12.0" layoutY="176.0" text="Pas de variation du prix à la hausse" />
       <Label layoutX="14.0" layoutY="240.0" text="Pas de variation du prix à la baisse" />
-      <TextField id="prix" layoutX="65.0" layoutY="62.0" />
-      <TextField id="timer" layoutX="65.0" layoutY="130.0" />
-      <TextField id="increment" layoutX="65.0" layoutY="198.0" />
-      <TextField id="decrement" layoutX="65.0" layoutY="262.0" />
-      <Button id="creerEnchere" layoutX="91.0" layoutY="320.0" mnemonicParsing="false" text="Créer l'enchère" />
+      <TextField fx:id="prix" layoutX="65.0" layoutY="62.0" />
+      <TextField fx:id="timer" layoutX="65.0" layoutY="130.0" />
+      <TextField fx:id="increment" layoutX="65.0" layoutY="198.0" />
+      <TextField fx:id="decrement" layoutX="65.0" layoutY="262.0" />
+      <Button fx:id="creerEnchere" layoutX="91.0" layoutY="320.0" mnemonicParsing="false" text="Créer l'enchère" />
    </children>
 </AnchorPane>
