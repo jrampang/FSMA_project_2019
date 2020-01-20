@@ -20,15 +20,6 @@ public class PreneurAgent extends Agent {
 			// Printout the name
 		    System.out.println("My name is "+myName);
 		    
-		    //Attend de recevoir au moins un to_announce
-		    
-		    //traite la/les annonce(s)
-		    //encheri ou pas
-		    
-		    //si on recoit un rep_bid(NOK)
-		    //alors on attend de recevoir un autre to_announce
-		    
-		    //sinon on attend un to_attribute, on paye, et on attend un to_give
 		    
 		    new Thread() {
 	            @Override

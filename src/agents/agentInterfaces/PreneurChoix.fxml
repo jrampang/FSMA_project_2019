@@ -6,20 +6,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="287.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="287.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="controller.PreneurChoixController">
    <children>
       <Label prefHeight="22.0" prefWidth="509.0" style="-fx-background-color: grey;" text="Preneur" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
             <Insets left="10.0" />
          </padding>
       </Label>
-      <TableView layoutY="22.0" prefHeight="200.0" prefWidth="509.0">
+      <TableView fx:id="tableView" layoutY="22.0" prefHeight="200.0" prefWidth="509.0">
         <columns>
-          <TableColumn prefWidth="377.0" text="Enchères" />
-          <TableColumn prefWidth="131.0" text="Montant courant" />
+          <TableColumn fx:id="EnchereCol" prefWidth="377.0" text="Enchères" />
+          <TableColumn fx:id="PrixCol" prefWidth="131.0" text="Montant courant" />
         </columns>
       </TableView>
-      <Button layoutX="324.0" layoutY="241.0" mnemonicParsing="false" text="Enchérir" />
-      <ChoiceBox layoutX="81.0" layoutY="241.0" prefWidth="150.0" />
+      <Button fx:id="lancerEnchere" layoutX="324.0" layoutY="241.0" mnemonicParsing="false" text="Enchérir" />
+      <ChoiceBox fx:id="mode" layoutX="81.0" layoutY="241.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
