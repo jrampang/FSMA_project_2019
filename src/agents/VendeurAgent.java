@@ -1,6 +1,5 @@
 package agents;
 
-import agents.agentInterfaces.VendeurFX;
 import jade.core.Agent;
 
 public class VendeurAgent extends Agent {
@@ -23,7 +22,7 @@ public class VendeurAgent extends Agent {
 		    new Thread() {
 	            @Override
 	            public void run() {
-	                javafx.application.Application.launch(VendeurFX.class);
+	                
 	            }
 	        }.start();
 		}

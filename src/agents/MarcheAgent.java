@@ -1,11 +1,11 @@
 package agents;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.IOException;
+import java.util.HashMap;
 
-import controller.MarcheController;
+import agents.agentBehaviours.MarcheReceiveBehaviour;
 import jade.core.Agent;
+
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
@@ -23,10 +23,17 @@ public class MarcheAgent extends Agent {
 	protected int step = 0;
 	protected boolean finish = false;
 	
+	// Max 2 vendeurs en theorie
+	private HashMap<String, Enchere> vendeurAgentList;
+	//private ArrayList<String> preneurAgentList;
+	
 	@Override
 	protected void setup() {
 		System.out.println("Hello! Agent "+getAID().getName()+" is ready.");
-
+		
+		vendeurAgentList = new HashMap<>();
+		//preneurAgentList = new ArrayList<>();
+		
 		// Get the name of the agent as a start-up argument
 		Object[] args = getArguments();
 		if (args != null && args.length > 0) {
@@ -35,6 +42,7 @@ public class MarcheAgent extends Agent {
 			// Printout the name
 		    System.out.println("My name is "+myName);
 		    
+		    addBehaviour(new MarcheReceiveBehaviour(this));
 		    
 		    new Thread() {
 	            @Override
@@ -44,9 +52,6 @@ public class MarcheAgent extends Agent {
             		Platform.runLater(new Runnable() {
             			@Override
             			public void run() {
-            				Dimension _screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    	                    double _width = _screenSize.getWidth();
-    	                    double _height = _screenSize.getHeight();
     						Parent root;
 							try {
 								root = FXMLLoader.load(getClass().getResource("agentInterfaces/Marche.fxml"));
@@ -55,14 +60,13 @@ public class MarcheAgent extends Agent {
 	    					    stage.setScene(new Scene(root));
 	    					    stage.show();
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
             			}
             		});
 	            }
 	        }.start();
-	        Thread update = new Thread(new Runnable() {
+	        /*Thread update = new Thread(new Runnable() {
 
 	            @Override
 	            public void run() {
@@ -70,8 +74,7 @@ public class MarcheAgent extends Agent {
 
 	                    @Override
 	                    public void run() {
-	                        System.out.println(myName + ": Ce message s'affiche en boucle.");
-	                        MarcheController.addEnchere(new Enchere("enchere", "prix"));
+	                        //System.out.println("from the marche" + getVendeurs());
 	                    }
 	                };
 
@@ -89,7 +92,7 @@ public class MarcheAgent extends Agent {
 	        });
 	        // don't let thread prevent JVM shutdown
 	        update.setDaemon(true);
-	        update.start();
+	        update.start();*/
 		}
 		else {
 			// Make the agent terminate
@@ -101,5 +104,21 @@ public class MarcheAgent extends Agent {
 	protected void takeDown() {
 		// Printout a dismissal message
 		System.out.println("Agent "+getAID().getName()+" terminating.");
+	}
+	
+	public HashMap<String, Enchere> getVendeurs (){
+		return this.vendeurAgentList;
+	}
+	
+	public void addVendeur(String agent, Enchere enchere) {
+		this.vendeurAgentList.put(agent, enchere);
+	}
+	
+	public void updateVendeur(String agent, Enchere enchere) {
+		this.vendeurAgentList.put(agent, enchere);
+	}
+	
+	public void deleteVendeur(String agent) {
+		this.vendeurAgentList.remove(agent);
 	}
 }

@@ -24,12 +24,24 @@ public class MarcheController {
 		return list;
 	}
 
-	public static void setList(ObservableList<Enchere> inputList) {
-		list = inputList;
-	}
-	
 	public static void addEnchere(Enchere e) {
 		list.add(e);
+	}
+	
+	public static void updateEnchere(Enchere e) {
+		for(int i = 0; i < list.size(); i++) {
+			if(list.get(i).equals(e)) {
+				list.set(i, e);
+			}
+		}
+	}
+	
+	public static void deleteEnchere(Enchere e) {
+		for(int i = 0; i < list.size(); i++) {
+			if(list.get(i).equals(e)) {
+				list.remove(i);
+			}
+		}
 	}
 	
 	@FXML
