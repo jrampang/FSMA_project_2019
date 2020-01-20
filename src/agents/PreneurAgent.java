@@ -39,4 +39,12 @@ public class PreneurAgent extends Agent {
 		// Printout a dismissal message
 		System.out.println("Agent "+getAID().getName()+" terminating.");
 	}
+
+	public String getMyName() {
+		return myName;
+	}
+
+	public void setMyName(String myName) {
+		this.myName = myName;
+	}
 }

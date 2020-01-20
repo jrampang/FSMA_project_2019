@@ -13,10 +13,10 @@
             <Insets left="10.0" />
          </padding>
       </Label>
-      <TableView layoutY="22.0" prefHeight="265.0" prefWidth="509.0">
+      <TableView id="tableView" layoutY="22.0" prefHeight="265.0" prefWidth="509.0">
         <columns>
-          <TableColumn prefWidth="357.0" text="Preneurs qui ont fait une offre" />
-          <TableColumn prefWidth="151.0" text="Montant de l'offre" />
+          <TableColumn fx:id="preneur" prefWidth="357.0" text="Preneurs qui ont fait une offre" />
+          <TableColumn fx:id="montant" prefWidth="151.0" text="Montant de l'offre" />
         </columns>
       </TableView>
    </children>

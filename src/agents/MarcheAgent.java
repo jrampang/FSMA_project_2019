@@ -5,18 +5,12 @@ import java.awt.Toolkit;
 import java.io.IOException;
 
 import controller.MarcheController;
-import javafx.scene.control.TableColumn;
-
 import jade.core.Agent;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import model.Enchere;
 
