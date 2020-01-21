@@ -28,17 +28,17 @@ public class VendeurAttributeBehaviour extends Behaviour{
 		MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CONFIRM);
 		ACLMessage msg = myAgent.receive(mt);
 		if (msg != null && msg.getAllReceiver() == myAgent) {
-			ACLMessage response = new ACLMessage(ACLMessage.AGREE);
-			response.addReceiver(msg.getSender());
-			System.out.println(msg);
-			response.setContent("Poisson");
-			myAgent.send(response);
-			finish = true;
 		}
 		else {
 			block();
 		}
-		
+
+		ACLMessage response = new ACLMessage(ACLMessage.AGREE);
+		response.addReceiver(msg.getSender());
+		System.out.println(msg);
+		response.setContent("Poisson");
+		myAgent.send(response);
+		finish = true;
 	}
 
 	@Override
