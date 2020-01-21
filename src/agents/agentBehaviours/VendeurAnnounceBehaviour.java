@@ -3,6 +3,7 @@ package agents.agentBehaviours;
 import java.util.HashMap;
 
 import agents.VendeurAgent;
+import controller.VendeurController;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -36,7 +37,8 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 
 	@Override
 	public void action() {
-		agent.getController().removeAllEncherisseurs();
+		VendeurController vc= agent.getController();
+		//.removeAllEncherisseurs();
 		ACLMessage msg = new ACLMessage(ACLMessage.CFP);
 		msg.addReceiver(new AID("Marche", AID.ISLOCALNAME));
 		msg.setContent(prix);

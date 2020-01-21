@@ -1,1 +1,1 @@
-http://scinfe055.univ-pau.fr:7778/acc
+http://LAPTOP-T2L8DC7G:7778/acc
