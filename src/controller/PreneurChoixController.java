@@ -15,9 +15,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Enchere;
 
@@ -36,6 +38,12 @@ public class PreneurChoixController {
 	
 	@FXML
 	private ChoiceBox<String> mode;
+	
+	@FXML
+	private TextField budget;
+	
+	@FXML
+	private Label error;
 	
 	private ObservableList<Enchere> list = FXCollections.observableArrayList();
 	
@@ -109,7 +117,7 @@ public class PreneurChoixController {
 						}
 						agent.addBehaviour(new PreneurManuelBehaviour(agent));
 			    	}
-			    	else if(choice.contains("Mode Automatique")) {
+			    	else if(choice.contains("Mode Automatique") && !budget.getText().isEmpty() && isInt(budget.getText())) {
 			    		agent.setMode("auto");
 			    		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../agents/agentInterfaces/PreneurAuto.fxml"));
 						Parent root;
@@ -129,8 +137,24 @@ public class PreneurChoixController {
 						}
 						agent.addBehaviour(new PreneurAutoBehaviour(agent));
 			    	}
+			    	else {
+			    		error.setVisible(true);
+			    	}
 		    	}
 		    }
+
+			private boolean isInt(String string) {
+				boolean valeur = true;
+				char[] tab = string.toCharArray();
+
+				for(char carac : tab){
+					if(!Character.isDigit(carac) && valeur){
+						valeur = false;
+					}
+				}
+
+				return valeur;
+			} 
 		});
 	}
 }

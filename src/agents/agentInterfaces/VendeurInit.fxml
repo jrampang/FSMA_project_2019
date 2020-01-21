@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="477.0" prefWidth="301.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VendeurInitController">
+<AnchorPane prefHeight="497.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VendeurInitController">
    <children>
       <Label prefHeight="22.0" prefWidth="509.0" style="-fx-background-color: grey;" text="Initialisation de l'enchère" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
@@ -17,12 +17,14 @@
       <Label layoutX="17.0" layoutY="180.0" text="Temps d'attente en seconde" />
       <Label layoutX="17.0" layoutY="257.0" text="Pas de variation du prix à la hausse" />
       <Label layoutX="19.0" layoutY="335.0" text="Pas de variation du prix à la baisse" />
-      <TextField fx:id="prix" layoutX="66.0" layoutY="136.0" />
-      <TextField fx:id="timer" layoutX="66.0" layoutY="214.0" />
-      <TextField fx:id="increment" layoutX="65.0" layoutY="291.0" />
-      <TextField fx:id="decrement" layoutX="65.0" layoutY="367.0" />
-      <Button fx:id="creerEnchere" layoutX="92.0" layoutY="427.0" mnemonicParsing="false" text="Créer l'enchère" />
+      <TextField fx:id="prix" layoutX="93.0" layoutY="135.0" />
+      <TextField fx:id="timer" layoutX="93.0" layoutY="213.0" />
+      <TextField fx:id="increment" layoutX="93.0" layoutY="291.0" />
+      <TextField fx:id="decrement" layoutX="93.0" layoutY="368.0" />
+      <Button fx:id="creerEnchere" layoutX="112.0" layoutY="458.0" mnemonicParsing="false" text="Créer l'enchère" AnchorPane.bottomAnchor="14.0" AnchorPane.topAnchor="458.0" />
       <Label layoutX="17.0" layoutY="31.0" text="Nom du lot" />
-      <TextField fx:id="nom" layoutX="65.0" layoutY="61.0" />
+      <TextField fx:id="nom" layoutX="93.0" layoutY="62.0" />
+      <Label fx:id="empty" layoutX="21.0" layoutY="411.0" text="Aucun champ ne doit être vide" textFill="RED" visible="false" />
+      <Label fx:id="entier" layoutX="19.0" layoutY="428.0" prefHeight="17.0" prefWidth="301.0" text="Les champs autres que le nom doivent être des entiers" textFill="RED" visible="false" />
    </children>
 </AnchorPane>

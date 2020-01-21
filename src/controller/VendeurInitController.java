@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class VendeurInitController {
@@ -26,6 +27,12 @@ public class VendeurInitController {
 	
 	@FXML
 	private Button creerEnchere;
+	
+	@FXML
+	private Label empty;
+	
+	@FXML
+	private Label entier;
 	
 	private VendeurAgent agent;
 
@@ -95,14 +102,24 @@ public class VendeurInitController {
 			 
 		    @Override
 		    public void handle(ActionEvent event) {
-		        //fermer cette fenetre et ouvrir la fenetre Vendeur
-		    	creerEnchere.getScene().getWindow().hide();
-		    	
-		    	if(agent != null) {
-		    		agent.creerEnchere();
-		    	}
+		    	if (!prix.getText().isEmpty() && isInt(prix.getText()) 
+		    		&& !nom.getText().isEmpty() 
+		    		&& !decrement.getText().isEmpty() && isInt(decrement.getText())
+		    		&& !increment.getText().isEmpty() && isInt(decrement.getText())
+		    		&& !timer.getText().isEmpty() && isInt(timer.getText())){
+			        //fermer cette fenetre et ouvrir la fenetre Vendeur
+			    	creerEnchere.getScene().getWindow().hide();
+			    	
+			    	if(agent != null) {
+			    		agent.creerEnchere();
+			    	}
+			    	else {
+			    		System.out.println("VendeurInitController: agent is null.");
+			    	}
+			    }
 		    	else {
-		    		System.out.println("VendeurInitController: agent is null.");
+		    		empty.setVisible(true);
+		    		entier.setVisible(true);
 		    	}
 		    }
 		});
@@ -117,4 +134,17 @@ public class VendeurInitController {
 	public void setAgent(VendeurAgent agent) {
 		this.agent = agent;
 	}
+	
+	private boolean isInt(String string) {
+		boolean valeur = true;
+		char[] tab = string.toCharArray();
+
+		for(char carac : tab){
+			if(!Character.isDigit(carac) && valeur){
+				valeur = false;
+			}
+		}
+
+		return valeur;
+	} 
 }
