@@ -75,8 +75,16 @@ public class PreneurChoixController {
 		}
 	}
 	
+	public PreneurAgent getAgent() {
+		return this.agent;
+	}
+	
 	public void setAgent(PreneurAgent agent) {
 		this.agent = agent;
+	}
+	
+	public Scene getScene() {
+		return mode.getScene();
 	}
 	
 	@FXML
@@ -93,11 +101,12 @@ public class PreneurChoixController {
 		    public void handle(ActionEvent event) {
 		    	ObservableList<Enchere> selectedEncheres = tableView.getSelectionModel().getSelectedItems();
 		    	if(selectedEncheres != null) {
-		    		System.out.println("Enchere clicked: " + selectedEncheres);
+		    		System.out.println(agent.getMyName() + ": Enchere clicked = " + selectedEncheres);
 		    		String choice = mode.getValue();
-			    	System.out.println("j'ai choisi: " + choice);
-			    	mode.getScene().getWindow().hide();
 			    	if(choice.contains("Mode manuel")) {
+			    		System.out.println(agent.getMyName() + ": j'ai choisit " + choice);
+			    		//mode.getScene().getWindow().hide();
+			    		agent.getStage().hide();
 			    		agent.setMode("manuel");
 			    		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../agents/agentInterfaces/PreneurManuel.fxml"));
 						Parent root;
@@ -118,7 +127,10 @@ public class PreneurChoixController {
 						agent.addBehaviour(new PreneurManuelBehaviour(agent));
 			    	}
 			    	else if(choice.contains("Mode Automatique") && !budget.getText().isEmpty() && isInt(budget.getText())) {
+			    		System.out.println(agent.getMyName() + ": j'ai choisit " + choice);
 			    		agent.setMode("auto");
+			    		//mode.getScene().getWindow().hide();
+			    		agent.getStage().hide();
 			    		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../agents/agentInterfaces/PreneurAuto.fxml"));
 						Parent root;
 						try {

@@ -24,7 +24,9 @@ public class PreneurAgent extends Agent {
 	private static final long serialVersionUID = -7728858608190050506L;
 	private String myName;
 	private boolean finish = false;
+	private boolean biding = true;
 	private ArrayList<Enchere> enchereList;
+	private Enchere outbidBid;
 	private int budget;
 	private String mode;
 	
@@ -37,6 +39,8 @@ public class PreneurAgent extends Agent {
 	
 	private PreneurAgent self;
 	
+	private ACLMessage to_bid;
+	
 	@Override
 	protected void setup() {
 		System.out.println("Hello! Agent "+getAID().getName()+" is ready.");
@@ -47,13 +51,11 @@ public class PreneurAgent extends Agent {
 		Object[] args = getArguments();
 		if (args != null && args.length > 0) {
 			myName = (String) args[0];
-			budget = Integer.parseInt((String) args[1]);
 			
 			self = this;
 			
 			// Printout the name
 		    System.out.println("My name is " + myName);
-		    System.out.println("My budget is " + budget);
 		    
 		    new Thread() {
 	            @Override
@@ -163,5 +165,29 @@ public class PreneurAgent extends Agent {
 
 	public void setMode(String mode) {
 		this.mode = mode;
+	}
+
+	public boolean isBiding() {
+		return biding;
+	}
+
+	public void setBiding(boolean biding) {
+		this.biding = biding;
+	}
+
+	public ACLMessage getTo_bid() {
+		return to_bid;
+	}
+
+	public void setTo_bid(ACLMessage to_bid) {
+		this.to_bid = to_bid;
+	}
+
+	public Enchere getOutbidBid() {
+		return outbidBid;
+	}
+
+	public void setOutbidBid(Enchere outbidBid) {
+		this.outbidBid = outbidBid;
 	}
 }

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import agents.PreneurAgent;
+import jade.core.AID;
+import jade.lang.acl.ACLMessage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -74,7 +76,18 @@ public class PreneurManuelController {
 		    @Override
 		    public void handle(ActionEvent event) {
 		    	ObservableList<Enchere> selectedEncheres = tableView.getSelectionModel().getSelectedItems();
-		        System.out.println("ManuelController: i have (surencherit) sur: " + selectedEncheres);
+		        System.out.println(agent.getMyName() + ": i have (surencherit) sur: " + selectedEncheres);
+		        if(selectedEncheres.size() > 1) {
+		        	System.out.println(agent.getMyName() + ": the functionality to handle multiple offers isn't implement yet.");
+		        }
+		        else{
+		        	System.out.println(agent.getMyName() + ": sending a to_bid manually.");
+		        	agent.setTo_bid(new ACLMessage(ACLMessage.PROPOSE));
+		        	agent.setOutbidBid(selectedEncheres.get(0));
+			        agent.getTo_bid().addReceiver(new AID(selectedEncheres.get(0).getVendeur(), AID.ISLOCALNAME));
+			        agent.send(agent.getTo_bid());
+			        //agent.setBiding(false);
+		        }
 		    }
 		});
 	}

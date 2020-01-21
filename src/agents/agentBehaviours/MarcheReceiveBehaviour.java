@@ -38,26 +38,6 @@ public class MarcheReceiveBehaviour extends Behaviour{
 	public void action() {
 		//System.out.println("The market: I'm going to check if there is any seller available.");
 		
-		// if i don't have any functional seller(s)
-		// i create them
-		// T_T
-		if(test) {
-			String V1 = "V1";
-			String V2 = "V2";
-			String V3 = "V3";
-			
-			marche.addVendeur(V1, new Enchere("1 lot de poisson", Integer.toString(20), V1));
-			MarcheController.addEnchere(new Enchere("1 lot de poisson", Integer.toString(20), V1));
-			
-			marche.addVendeur(V2, new Enchere("1 lot de poisson", Integer.toString(15), V2));
-			MarcheController.addEnchere(new Enchere("1 lot de poisson", Integer.toString(15), V2));
-			
-			marche.addVendeur(V3, new Enchere("1 lot de poisson", Integer.toString(25), V3));
-			MarcheController.addEnchere(new Enchere("1 lot de poisson", Integer.toString(25), V3));
-			
-			test = false;
-		}
-		
 		msg = myAgent.receive();
 		
 		// if i received a message
@@ -70,7 +50,7 @@ public class MarcheReceiveBehaviour extends Behaviour{
 			if(msg.getPerformative() == ACLMessage.CFP) {
 				//System.out.println("Market behaviour: i received a to_announce.");
 				if(!marche.getVendeurs().containsKey(agentName)) {
-					System.out.println("Market behaviour: i add a new seller / offer.");
+					System.out.println(marche.getMyName() + ": i add a new seller / offer.");
 					marche.addVendeur(agentName, new Enchere("1 lot de poisson", msg.getContent(), agentName));
 					MarcheController.addEnchere(new Enchere("1 lot de poisson", msg.getContent(), agentName));
 				}
@@ -106,9 +86,9 @@ public class MarcheReceiveBehaviour extends Behaviour{
 			// if i received a to_rep_bid
 			// i remove the seller
 			else if(msg.getPerformative() == ACLMessage.INFORM) {
-				System.out.println("Market behaviour: i received a rep_bid from " + agentName);
-				System.out.println("Market behaviour: i delete a new seller / offer.");
-				System.out.println("Market behaviour: i received as performative " + msg.getPerformative());
+				System.out.println(marche.getMyName() + ": i received a rep_bid from " + agentName);
+				System.out.println(marche.getMyName() + ": i delete a new seller / offer.");
+				System.out.println(marche.getMyName() + ": i received as performative " + msg.getPerformative());
 				if(marche.getVendeurs().containsKey(agentName)) {
 					Enchere e = marche.getVendeurs().get(agentName);
 					marche.deleteVendeur(agentName);
@@ -118,12 +98,15 @@ public class MarcheReceiveBehaviour extends Behaviour{
 				marche.send(confirm);
 			}
 			// if i received a query_if
-			// i send to the buyer the available offers
+			// i send to the buyer(s) the available offers
 			else if(msg.getPerformative() == ACLMessage.QUERY_IF) {
-				System.out.println("Market behaviour: i received a request from a buyer.");
+				System.out.println(marche.getMyName() + ": i received a request from a buyer.");
 				System.out.println("Buyer name: " + agentName);
-				
-				if(marche.getVendeurs().size() > 0) {
+				if(!this.waitingBuyer.contains(agentName)) {
+					this.waitingBuyer.add(agentName);
+				}
+				System.out.println(marche.getMyName() + ": waiting buyers: " + this.waitingBuyer);
+				/*if(marche.getVendeurs().size() > 0) {
 					System.out.println("Market behaviour: i'm going to send the offers i have.");
 					answer.addReceiver(new AID(agentName, AID.ISLOCALNAME));
 					marche.getVendeurs().forEach((k,v)->{
@@ -146,7 +129,7 @@ public class MarcheReceiveBehaviour extends Behaviour{
 				else {
 					this.waitingBuyer.add(agentName);
 					System.out.println("Market: waiting buyers: " + this.waitingBuyer);
-				}
+				}*/
 			}
 		}
 		else {

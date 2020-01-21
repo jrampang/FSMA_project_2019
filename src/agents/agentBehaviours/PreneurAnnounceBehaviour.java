@@ -41,29 +41,38 @@ public class PreneurAnnounceBehaviour extends Behaviour{
 			// if i received a update
 			// from the market
 			// i update the my list of offers
-			//System.out.println("The buyer: I received an answer from the market.");
+			//System.out.println(owner.getMyName() + ": I received an answer from the market.");
 			try {
 				if(msgReceived.getContentObject() != null) {
 					Enchere e = (Enchere) msgReceived.getContentObject();
 					if(!owner.getChoixController().getList().contains(e)) {
-						//owner.getEnchereList().add(e);
-						//System.out.println("The buyer: " + owner.getChoixController().getList());
 						if(owner.getChoixController() != null) {
-							//System.out.println("choixController isn't null");
 							owner.getChoixController().addEnchere(e);
 							owner.getChoixController().updateEnchere(e);
-						}
-						else {
-							//System.out.println("choixController is null");
+							owner.updateEnchereList(e);
 						}
 					}
 					else {
 						owner.getChoixController().updateEnchere(e);
 						owner.updateEnchereList(e);
+						if(owner.getMode().contains("auto")) {
+							if(owner.getAutoController() != null) {
+								System.out.println(owner.getMyName() + ": I am on auto mode.");
+								owner.getAutoController().updateEnchere(e);
+							}
+						}
+						else if(owner.getMode().contains("manuel")) {
+							if(owner.getManuelController() != null) {
+								System.out.println(owner.getMyName() + ": I am on manuel mode.");
+								owner.getManuelController().updateEnchere(e);
+							}
+						}
 					}
 				}
+				else {
+					System.out.println(owner.getMyName() + ": the market has send me all his offers.");
+				}
 			} catch (UnreadableException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			asked = true;
@@ -74,7 +83,6 @@ public class PreneurAnnounceBehaviour extends Behaviour{
 	}
 	@Override
 	public boolean done() {
-		// TODO Auto-generated method stub
 		return finish;
 	}
 }

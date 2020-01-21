@@ -118,6 +118,14 @@ public class MarcheAgent extends Agent {
 		System.out.println("Agent "+getAID().getName()+" terminating.");
 	}
 	
+	public String getMyName() {
+		return myName;
+	}
+
+	public void setMyName(String myName) {
+		this.myName = myName;
+	}
+
 	public HashMap<String, Enchere> getVendeurs (){
 		return this.vendeurAgentList;
 	}
