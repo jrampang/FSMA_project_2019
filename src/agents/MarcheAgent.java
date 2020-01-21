@@ -62,6 +62,7 @@ public class MarcheAgent extends Agent {
 							try {
 								root = FXMLLoader.load(getClass().getResource("agentInterfaces/Marche.fxml"));
 								stage = new Stage();
+								stage.setX(500);
 	    					    stage.setTitle(myName);
 	    					    stage.setScene(new Scene(root));
 	    					    stage.setResizable(false);

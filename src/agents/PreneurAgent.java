@@ -70,6 +70,7 @@ public class PreneurAgent extends Agent {
 								choixController = fxmlloader.getController();
 								choixController.setAgent(self);
 								stage = new Stage();
+								stage.setX(10);
 	    					    stage.setTitle(myName);
 	    					    stage.setScene(new Scene(root));
 	    					    stage.setResizable(false);

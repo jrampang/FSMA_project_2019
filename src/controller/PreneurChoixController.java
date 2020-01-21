@@ -93,6 +93,7 @@ public class PreneurChoixController {
 								agent.getEnchereList().add(selectedEncheres.get(i));
 								agent.getManuelController().addEnchere(selectedEncheres.get(i));
 							};
+							agent.getStage().setX(10);
 							agent.getStage().setScene(new Scene(root));
 							agent.getStage().show();
 						} catch (IOException error) {
@@ -112,6 +113,7 @@ public class PreneurChoixController {
 								agent.getEnchereList().add(selectedEncheres.get(i));
 								agent.getAutoController().addEnchere(selectedEncheres.get(i));
 							};
+							agent.getStage().setX(10);
 							agent.getStage().setScene(new Scene(root));
 							agent.getStage().show();
 						} catch (IOException error) {

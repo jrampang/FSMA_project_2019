@@ -80,6 +80,7 @@ public class VendeurAgent extends Agent {
 								controllerInit.setAgent(self);
 								System.out.println("VendeurAgent: self = " + self);
 								Stage stage = new Stage();
+								stage.setX(1200);
 	    					    stage.setTitle(myName);
 	    					    stage.setScene(new Scene(root));
 	    					    stage.setResizable(false);
@@ -126,6 +127,7 @@ public class VendeurAgent extends Agent {
 					root = fxmlloader2.load();
 					controller = fxmlloader2.getController();
 					Stage stage2 = new Stage();
+					stage2.setX(1000);
 					stage2.setTitle(myName);
 					stage2.setScene(new Scene(root));
 					stage2.show();
