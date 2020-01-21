@@ -70,7 +70,6 @@ public class PreneurAgent extends Agent {
 								choixController = fxmlloader.getController();
 								choixController.setAgent(self);
 								stage = new Stage();
-								stage.setX(10);
 	    					    stage.setTitle(myName);
 	    					    stage.setScene(new Scene(root));
 	    					    stage.setResizable(false);
@@ -106,6 +105,14 @@ public class PreneurAgent extends Agent {
 
 	public ArrayList<Enchere> getEnchereList() {
 		return enchereList;
+	}
+	
+	public void updateEnchereList(Enchere e) {
+		for(int i = 0; i < enchereList.size(); i++) {
+			if(enchereList.get(i).equals(e)) {
+				enchereList.set(i, e);
+			}
+		}
 	}
 
 	public void setEnchereList(ArrayList<Enchere> enchereList) {

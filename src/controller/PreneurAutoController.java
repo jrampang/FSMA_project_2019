@@ -35,6 +35,14 @@ public class PreneurAutoController {
 		list.add(e);
 	}
 	
+	public void updateEnchere(Enchere e) {
+		for(int i = 0; i < list.size(); i++) {
+			if(list.get(i).equals(e)) {
+				list.set(i, e);
+			}
+		}
+	}
+	
 	public void setAgent(PreneurAgent agent) {
 		this.agent = agent;
 	}

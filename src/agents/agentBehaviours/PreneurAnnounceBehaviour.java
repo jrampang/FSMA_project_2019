@@ -27,11 +27,10 @@ public class PreneurAnnounceBehaviour extends Behaviour{
 	
 	@Override
 	public void action() {
+		//System.out.println("The buyer: I'm going to check the market if there is any offer available.");
 		if(asked == false) {
-			System.out.println("The buyer: I'm going to check the market if there is any offer available.");
 			query.addReceiver(new AID("Marche", AID.ISLOCALNAME));
 			owner.send(query);
-			asked = true;
 		}
 		
 		msgReceived = owner.receive();
@@ -41,31 +40,33 @@ public class PreneurAnnounceBehaviour extends Behaviour{
 			// if i received a update
 			// from the market
 			// i update the my list of offers
-			if(msgReceived.getPerformative() == ACLMessage.INFORM) {
-				System.out.println("The buyer: I received an answer from the market.");
+			if(msgReceived.getPerformative() == ACLMessage.QUERY_REF) {
+				//System.out.println("The buyer: I received an answer from the market.");
 				try {
 					if(msgReceived.getContentObject() != null) {
 						Enchere e = (Enchere) msgReceived.getContentObject();
 						if(!owner.getChoixController().getList().contains(e)) {
 							//owner.getEnchereList().add(e);
-							//System.out.println("The buyer: " + owner.getEnchereList());
+							//System.out.println("The buyer: " + owner.getChoixController().getList());
 							if(owner.getChoixController() != null) {
-								System.out.println("choixController isn't null");
+								//System.out.println("choixController isn't null");
 								owner.getChoixController().addEnchere(e);
+								owner.getChoixController().updateEnchere(e);
 							}
 							else {
-								System.out.println("choixController is null");
+								//System.out.println("choixController is null");
 							}
 						}
+						else {
+							owner.getChoixController().updateEnchere(e);
+							owner.updateEnchereList(e);
+						}
 					}
-					/*else {
-						System.out.println("The buyer: the market send me all the offers.");
-						finish = true;
-					}*/
 				} catch (UnreadableException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				asked = true;
 			}
 		}
 		else {

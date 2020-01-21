@@ -1,6 +1,7 @@
 package agents.agentBehaviours;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import agents.MarcheAgent;
 import controller.MarcheController;
@@ -17,13 +18,16 @@ public class MarcheReceiveBehaviour extends Behaviour{
 	private static final long serialVersionUID = 4066769460731071811L;
 	private boolean finish = false;
 	private ACLMessage msg;
-	private ACLMessage answer = new ACLMessage(ACLMessage.INFORM);
+	private ACLMessage answer = new ACLMessage(ACLMessage.QUERY_REF);
 	private MarcheAgent marche;
 	
 	private boolean test = false;
 	
+	private ArrayList<String> waitingBuyer;
+	
 	public MarcheReceiveBehaviour(MarcheAgent agent) {
 		this.marche = agent;
+		this.waitingBuyer = new ArrayList<>();
 	}
 	
 	@Override
@@ -60,22 +64,47 @@ public class MarcheReceiveBehaviour extends Behaviour{
 			// i add him and his offer
 			// or update his offer
 			if(msg.getPerformative() == ACLMessage.CFP) {
-				System.out.println("Market behaviour: i received a to_announce.");
+				//System.out.println("Market behaviour: i received a to_announce.");
 				if(!marche.getVendeurs().containsKey(agentName)) {
-					System.out.println("Marche behaviour: i add a new seller / offer.");
+					System.out.println("Market behaviour: i add a new seller / offer.");
 					marche.addVendeur(agentName, new Enchere("1 lot de poisson", msg.getContent(), agentName));
 					MarcheController.addEnchere(new Enchere("1 lot de poisson", msg.getContent(), agentName));
 				}
 				else {
-					System.out.println("Market behaviour: i update a seller / offer.");
+					//System.out.println("Market behaviour: i update a seller / offer.");
 					marche.updateVendeur(agentName, new Enchere("1 lot de poisson", msg.getContent(), agentName));
 					MarcheController.updateEnchere(new Enchere("1 lot de poisson", msg.getContent(), agentName));
+				}
+				if(this.waitingBuyer.size() > 0) {
+					for(int i = 0; i < this.waitingBuyer.size(); i++) {
+						answer.addReceiver(new AID(this.waitingBuyer.get(i), AID.ISLOCALNAME));
+					}
+					marche.getVendeurs().forEach((k,v)->{
+						try {
+							//System.out.println("Market test 2: " + v);
+							answer.setContentObject(v);
+							myAgent.send(answer);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					});
+					try {
+						answer.setContentObject(null);
+						myAgent.send(answer);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					//this.waitingBuyer.clear();
+					//System.out.println("Market: waiting buyers cleared.");
 				}
 			}
 			// if i received a to_rep_bid
 			// i remove the seller
 			else if(msg.getPerformative() == ACLMessage.INFORM) {
 				System.out.println("Market behaviour: i received a rep_bid.");
+				System.out.println("Market behaviour: i delete a new seller / offer.");
+				System.out.println("Market behaviour: i received as performative " + msg.getPerformative());
 				if(marche.getVendeurs().containsKey(agentName)) {
 					Enchere e = marche.getVendeurs().get(agentName);
 					marche.deleteVendeur(agentName);
@@ -89,26 +118,28 @@ public class MarcheReceiveBehaviour extends Behaviour{
 				System.out.println("Buyer name: " + agentName);
 				
 				if(marche.getVendeurs().size() > 0) {
+					System.out.println("Market behaviour: i'm going to send the offers i have.");
 					answer.addReceiver(new AID(agentName, AID.ISLOCALNAME));
-					//try {
-					for(int i = 0; i < marche.getVendeurs().size(); i++) {
-						marche.getVendeurs().forEach((k,v)->{
-							try {
-								System.out.println("Market test 2: " + v);
-								answer.setContentObject(v);
-								myAgent.send(answer);
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						});
-					}
+					marche.getVendeurs().forEach((k,v)->{
+						try {
+							//System.out.println("Market test 2: " + v);
+							answer.setContentObject(v);
+							myAgent.send(answer);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					});
 					try {
 						answer.setContentObject(null);
 						myAgent.send(answer);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
+				}
+				else {
+					this.waitingBuyer.add(agentName);
+					System.out.println("Market: waiting buyers: " + this.waitingBuyer);
 				}
 			}
 		}
