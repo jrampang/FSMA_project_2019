@@ -17,15 +17,12 @@ public class PreneurAnnounceBehaviour extends Behaviour{
 	private static final long serialVersionUID = 9069270292752485443L;
 	private boolean finish = false;
 	private boolean asked = false;
-	private boolean auto = true;
 	private ACLMessage msgReceived;
 	private ACLMessage query = new ACLMessage(ACLMessage.QUERY_IF);
 	private PreneurAgent owner;
-	private String mode;
 	
-	public PreneurAnnounceBehaviour(PreneurAgent agent, String mode) {
+	public PreneurAnnounceBehaviour(PreneurAgent agent) {
 		this.owner = agent;
-		this.mode = mode;
 	}
 	
 	@Override
@@ -51,18 +48,7 @@ public class PreneurAnnounceBehaviour extends Behaviour{
 						Enchere e = (Enchere) msgReceived.getContentObject();
 						owner.getEnchereList().add(e);
 						//System.out.println("The buyer: " + owner.getEnchereList());
-						if(mode.contains("auto")) {
-							PreneurAutoController.addEnchere(e);
-						}
-						if(mode.contains("manuel")) {
-							PreneurManuelController.addEnchere(e);
-						}
-						if(mode.contains("choix")) {
-							PreneurChoixController.addEnchere(e);
-						}
-						else {
-							PreneurChoixController.addEnchere(e);
-						}
+						PreneurChoixController.addEnchere(e);
 					}
 					else {
 						System.out.println("The buyer: the market send me all the offers.");

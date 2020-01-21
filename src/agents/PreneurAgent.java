@@ -47,7 +47,6 @@ public class PreneurAgent extends Agent {
 		if (args != null && args.length > 0) {
 			myName = (String) args[0];
 			budget = Integer.parseInt((String) args[1]);
-			mode = (String) args[2];
 			
 			self = this;
 			
@@ -55,7 +54,7 @@ public class PreneurAgent extends Agent {
 		    System.out.println("My name is " + myName);
 		    System.out.println("My budget is " + budget);
 		    
-			addBehaviour(new PreneurAnnounceBehaviour(this, mode));
+			addBehaviour(new PreneurAnnounceBehaviour(this));
 		    
 		    new Thread() {
 	            @Override
