@@ -30,7 +30,7 @@ public class PreneurManuelController {
 	@FXML
 	private Button rencherir;
 	
-	private static ObservableList<Enchere> list = FXCollections.observableArrayList();
+	private ObservableList<Enchere> list = FXCollections.observableArrayList();
 	
 	private PreneurAgent agent;
 
@@ -38,11 +38,11 @@ public class PreneurManuelController {
 		return list;
 	}
 
-	public static void setList(ObservableList<Enchere> inputList) {
+	public void setList(ObservableList<Enchere> inputList) {
 		list = inputList;
 	}
 	
-	public static void addEnchere(Enchere e) {
+	public void addEnchere(Enchere e) {
 		list.add(e);
 	}
 	

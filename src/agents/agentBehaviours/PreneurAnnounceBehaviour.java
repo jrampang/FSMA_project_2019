@@ -46,9 +46,11 @@ public class PreneurAnnounceBehaviour extends Behaviour{
 				try {
 					if(msgReceived.getContentObject() != null) {
 						Enchere e = (Enchere) msgReceived.getContentObject();
-						owner.getEnchereList().add(e);
-						//System.out.println("The buyer: " + owner.getEnchereList());
-						PreneurChoixController.addEnchere(e);
+						if(!owner.getEnchereList().contains(e)) {
+							owner.getEnchereList().add(e);
+							//System.out.println("The buyer: " + owner.getEnchereList());
+							PreneurChoixController.addEnchere(e);
+						}
 					}
 					else {
 						System.out.println("The buyer: the market send me all the offers.");

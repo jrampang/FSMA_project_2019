@@ -73,36 +73,46 @@ public class PreneurChoixController {
 			 
 		    @Override
 		    public void handle(ActionEvent event) {
-		    	String choice = mode.getValue();
-		    	System.out.println("j'ai choisi: " + choice);
-		    	mode.getScene().getWindow().hide();
-		    	if(choice.contains("Mode manuel")) {
-		    		agent.setMode("manuel");
-		    		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../agents/agentInterfaces/PreneurManuel.fxml"));
-					Parent root;
-					try {
-						root = fxmlloader.load();
-						agent.setManuelController(fxmlloader.getController());
-						agent.getManuelController().setAgent(agent);
-						agent.getStage().setScene(new Scene(root));
-						agent.getStage().show();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-		    	}
-		    	else if(choice.contains("Mode Automatique")) {
-		    		agent.setMode("auto");
-		    		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../agents/agentInterfaces/PreneurAuto.fxml"));
-					Parent root;
-					try {
-						root = fxmlloader.load();
-						agent.setAutoController(fxmlloader.getController());
-						agent.getAutoController().setAgent(agent);
-						agent.getStage().setScene(new Scene(root));
-						agent.getStage().show();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+		    	ObservableList<Enchere> selectedEncheres = tableView.getSelectionModel().getSelectedItems();
+		    	if(selectedEncheres != null) {
+		    		System.out.println("Enchere clicked: " + selectedEncheres);
+		    		String choice = mode.getValue();
+			    	System.out.println("j'ai choisi: " + choice);
+			    	mode.getScene().getWindow().hide();
+			    	if(choice.contains("Mode manuel")) {
+			    		agent.setMode("manuel");
+			    		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../agents/agentInterfaces/PreneurManuel.fxml"));
+						Parent root;
+						try {
+							root = fxmlloader.load();
+							agent.setManuelController(fxmlloader.getController());
+							agent.getManuelController().setAgent(agent);
+							for(int i = 0; i < selectedEncheres.size(); i++) {
+								agent.getManuelController().addEnchere(selectedEncheres.get(i));
+							};
+							agent.getStage().setScene(new Scene(root));
+							agent.getStage().show();
+						} catch (IOException error) {
+							error.printStackTrace();
+						}
+			    	}
+			    	else if(choice.contains("Mode Automatique")) {
+			    		agent.setMode("auto");
+			    		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../agents/agentInterfaces/PreneurAuto.fxml"));
+						Parent root;
+						try {
+							root = fxmlloader.load();
+							agent.setAutoController(fxmlloader.getController());
+							agent.getAutoController().setAgent(agent);
+							for(int i = 0; i < selectedEncheres.size(); i++) {
+								agent.getAutoController().addEnchere(selectedEncheres.get(i));
+							};
+							agent.getStage().setScene(new Scene(root));
+							agent.getStage().show();
+						} catch (IOException error) {
+							error.printStackTrace();
+						}
+			    	}
 		    	}
 		    }
 		});

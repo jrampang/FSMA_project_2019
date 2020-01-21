@@ -48,6 +48,7 @@ public class VendeurAgent extends Agent {
 								Stage stage = new Stage();
 	    					    stage.setTitle(myName);
 	    					    stage.setScene(new Scene(root));
+	    					    stage.setResizable(false);
 	    					    stage.show();
 							} catch (IOException e) {
 								// TODO Auto-generated catch block

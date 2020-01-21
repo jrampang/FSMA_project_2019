@@ -57,7 +57,7 @@ public class Enchere implements Serializable{
             return false;
         }
 		Enchere e = (Enchere) obj;
-		return (this.vendeur == e.getVendeur());
+		return (this.vendeur.contains(e.getVendeur()));
 	}
 	
 	@Override
