@@ -6,21 +6,23 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="382.0" prefWidth="301.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VendeurInitController">
+<AnchorPane prefHeight="477.0" prefWidth="301.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VendeurInitController">
    <children>
       <Label prefHeight="22.0" prefWidth="509.0" style="-fx-background-color: grey;" text="Initialisation de l'enchère" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
             <Insets left="10.0" />
          </padding>
       </Label>
-      <Label layoutX="14.0" layoutY="40.0" text="Prix de base" />
-      <Label layoutX="12.0" layoutY="108.0" text="Temps d'attente en seconde" />
-      <Label layoutX="12.0" layoutY="176.0" text="Pas de variation du prix à la hausse" />
-      <Label layoutX="14.0" layoutY="240.0" text="Pas de variation du prix à la baisse" />
-      <TextField fx:id="prix" layoutX="65.0" layoutY="62.0" />
-      <TextField fx:id="timer" layoutX="65.0" layoutY="130.0" />
-      <TextField fx:id="increment" layoutX="65.0" layoutY="198.0" />
-      <TextField fx:id="decrement" layoutX="65.0" layoutY="262.0" />
-      <Button fx:id="creerEnchere" layoutX="91.0" layoutY="320.0" mnemonicParsing="false" text="Créer l'enchère" />
+      <Label layoutX="17.0" layoutY="106.0" text="Prix de base" />
+      <Label layoutX="17.0" layoutY="180.0" text="Temps d'attente en seconde" />
+      <Label layoutX="17.0" layoutY="257.0" text="Pas de variation du prix à la hausse" />
+      <Label layoutX="19.0" layoutY="335.0" text="Pas de variation du prix à la baisse" />
+      <TextField fx:id="prix" layoutX="66.0" layoutY="136.0" />
+      <TextField fx:id="timer" layoutX="66.0" layoutY="214.0" />
+      <TextField fx:id="increment" layoutX="65.0" layoutY="291.0" />
+      <TextField fx:id="decrement" layoutX="65.0" layoutY="367.0" />
+      <Button fx:id="creerEnchere" layoutX="92.0" layoutY="427.0" mnemonicParsing="false" text="Créer l'enchère" />
+      <Label layoutX="17.0" layoutY="31.0" text="Nom du lot" />
+      <TextField fx:id="nom" layoutX="65.0" layoutY="61.0" />
    </children>
 </AnchorPane>

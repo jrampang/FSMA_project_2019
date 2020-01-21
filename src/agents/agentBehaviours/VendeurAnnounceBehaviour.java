@@ -2,10 +2,12 @@ package agents.agentBehaviours;
 
 import java.util.HashMap;
 
+import agents.VendeurAgent;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import model.Encherisseur;
 
 public class VendeurAnnounceBehaviour extends Behaviour{
 	boolean finish = false;
@@ -19,18 +21,22 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 	private int decrement;
 	
 	private HashMap<String, String> acheteurs;
+	
+	private VendeurAgent agent;
 
 	
-	public VendeurAnnounceBehaviour(String prix, int timer, int increment, int decrement) {
+	public VendeurAnnounceBehaviour(String prix, int timer, int increment, int decrement, VendeurAgent agent) {
 		this.prix = prix;
 		this.timer = timer;
 		this.increment = increment;
 		this.decrement = decrement;
+		this.agent = agent;
 		acheteurs = new HashMap<String, String>();
 	}
 
 	@Override
 	public void action() {
+		agent.getController().removeAllEncherisseurs();
 		ACLMessage msg = new ACLMessage(ACLMessage.CFP);
 		msg.addReceiver(new AID("Marche", AID.ISLOCALNAME));
 		msg.setContent(prix);
@@ -44,8 +50,10 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 			if (receive != null) {
 				compteur++;
 				acheteurs.put(receive.getSender().toString(), prix);
+				Encherisseur e = new Encherisseur(receive.getSender().toString(), prix, agent.getEnchere());
+				agent.getController().addEncherisseur(e);
 			}
-			
+		}
 			if(compteur == 0) {
 				int prixInt = Integer.parseInt(prix)-decrement;
 				
@@ -53,7 +61,7 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 					prixInt = 0;
 				}
 				
-				myAgent.addBehaviour(new VendeurAnnounceBehaviour(Integer.toString(prixInt), timer, increment, decrement));
+				myAgent.addBehaviour(new VendeurAnnounceBehaviour(Integer.toString(prixInt), timer, increment, decrement, agent));
 			}
 			
 			else if (compteur == 1) {
@@ -65,7 +73,7 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 					myAgent.send(rep_bid);
 				}
 				
-				myAgent.addBehaviour(new VendeurAttributeBehaviour(acheteurs));
+				myAgent.addBehaviour(new VendeurAttributeBehaviour(acheteurs, agent));
 			}
 			
 			else {
@@ -73,14 +81,14 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 				for (String i : acheteurs.keySet()) {
 					ACLMessage rep_bid = new ACLMessage(ACLMessage.INFORM);
 					rep_bid.addReceiver(new AID(i, AID.ISLOCALNAME));
+					rep_bid.addReceiver(new AID("Marche", AID.ISLOCALNAME));
 					rep_bid.setContent("NOK");
 					myAgent.send(rep_bid);
 				}
 				
 				int prixInt = Integer.parseInt(prix)+increment;
-				myAgent.addBehaviour(new VendeurAnnounceBehaviour(Integer.toString(prixInt), timer, increment, decrement));
+				myAgent.addBehaviour(new VendeurAnnounceBehaviour(Integer.toString(prixInt), timer, increment, decrement, agent));
 			}
-		}
 		finish = true;
 	}
 

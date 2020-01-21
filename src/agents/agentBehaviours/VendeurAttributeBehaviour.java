@@ -2,6 +2,7 @@ package agents.agentBehaviours;
 
 import java.util.HashMap;
 
+import agents.VendeurAgent;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -10,9 +11,11 @@ import jade.lang.acl.MessageTemplate;
 public class VendeurAttributeBehaviour extends Behaviour{
 	private HashMap<String, String> acheteurs;
 	private boolean finish = false;
+	private VendeurAgent agent;
 
-	public VendeurAttributeBehaviour(HashMap<String, String> acheteurs) {
+	public VendeurAttributeBehaviour(HashMap<String, String> acheteurs, VendeurAgent agent) {
 		this.acheteurs = acheteurs;
+		this.agent = agent;
 	}
 
 	@Override
@@ -30,7 +33,6 @@ public class VendeurAttributeBehaviour extends Behaviour{
 		else {
 			block();
 		}
-		
 		ACLMessage response = new ACLMessage(ACLMessage.AGREE);
 		response.addReceiver(msg.getSender());
 		response.setContent("Poisson");

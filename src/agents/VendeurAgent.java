@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
 
+import controller.VendeurController;
 import controller.VendeurInitController;
 import jade.core.Agent;
 import javafx.application.Platform;
@@ -12,13 +13,40 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Enchere;
 
 public class VendeurAgent extends Agent {
 	private String myName;
 	private int step = 0;
 	private boolean finish = false;
-	VendeurInitController controller;
+	private VendeurInitController controllerInit;
+	private VendeurController controller;
+	private Enchere enchere;
 	
+	public Enchere getEnchere() {
+		return enchere;
+	}
+
+	public void setEnchere(Enchere enchere) {
+		this.enchere = enchere;
+	}
+
+	public VendeurInitController getControllerInit() {
+		return controllerInit;
+	}
+
+	public void setControllerInit(VendeurInitController controllerInit) {
+		this.controllerInit = controllerInit;
+	}
+
+	public VendeurController getController() {
+		return controller;
+	}
+
+	public void setController(VendeurController controller) {
+		this.controller = controller;
+	}
+
 	@Override
 	protected void setup() {
 		System.out.println("Hello! Agent "+getAID().getName()+" is ready.");
@@ -30,6 +58,7 @@ public class VendeurAgent extends Agent {
 			
 			// Printout the name
 		    System.out.println("My name is "+myName);
+			VendeurAgent self = this;
 		    
 		    /*new Thread() {
 	            @Override
@@ -44,7 +73,11 @@ public class VendeurAgent extends Agent {
     	                    double _height = _screenSize.getHeight();
     						Parent root;
 							try {
-								root = FXMLLoader.load(getClass().getResource("agentInterfaces/VendeurInit.fxml"));
+								FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("agentInterfaces/VendeurInit.fxml"));
+								root = fxmlloader.load();
+								controllerInit = fxmlloader.getController();
+								controllerInit.setAgent(self);
+								System.out.println("VendeurAgent: self = " + self);
 								Stage stage = new Stage();
 	    					    stage.setTitle(myName);
 	    					    stage.setScene(new Scene(root));
@@ -71,9 +104,8 @@ public class VendeurAgent extends Agent {
 	}
 	
 	public void creerEnchere() {
+		enchere = new Enchere(controllerInit.getNom().getText(), controllerInit.getPrix().getText(), this.myName);
 		new JFXPanel();
-		VendeurAgent self = this;
-		System.out.println("creerEnchere: self is" + self);
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
@@ -82,14 +114,11 @@ public class VendeurAgent extends Agent {
                 double _height = _screenSize.getHeight();
 				Parent root;
 				try {
-					FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("agentInterfaces/VendeurInit.fxml"));
-					root = fxmlloader.load();
-					controller = fxmlloader.getController();
-					controller.setAgent(self);
+					/*root = FXMLLoader.load(getClass().getResource("agentInterfaces/VendeurInit.fxml"));
 					Stage stage = new Stage();
 				    stage.setTitle(myName);
 				    stage.setScene(new Scene(root));
-				    stage.show();
+				    stage.show();*/
 				    FXMLLoader fxmlloader2 = new FXMLLoader(getClass().getResource("agentInterfaces/Vendeur.fxml"));
 					root = fxmlloader2.load();
 					controller = fxmlloader2.getController();

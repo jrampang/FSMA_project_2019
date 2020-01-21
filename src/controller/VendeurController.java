@@ -27,8 +27,16 @@ public class VendeurController {
 		VendeurController.list = list;
 	}
 	
-	public static void addEncherisseur(Encherisseur e) {
+	public void addEncherisseur(Encherisseur e) {
 		list.add(e);
+	}
+	
+	public void removeEncherisseur(Encherisseur e) {
+		list.remove(e);
+	}
+	
+	public void removeAllEncherisseurs() {
+		list.clear();
 	}
 	
 	@FXML
@@ -37,4 +45,6 @@ public class VendeurController {
 		preneur.setCellValueFactory(cellData -> cellData.getValue().getPreneur());
 		montant.setCellValueFactory(cellData -> cellData.getValue().getOffre());
 	}
+
+	
 }

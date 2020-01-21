@@ -1,32 +1,34 @@
 package model;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Encherisseur {
-	private StringProperty preneur;
-	private StringProperty offre;
+	private String preneur;
+	private String offre;
 	private Enchere enchere;
 	
-	public Encherisseur(StringProperty preneur, StringProperty offre, Enchere enchere) {
+	public Encherisseur(String preneur, String offre, Enchere enchere) {
 		super();
 		this.preneur = preneur;
 		this.offre = offre;
 		this.enchere = enchere;
 	}
 
+
 	public StringProperty getPreneur() {
-		return preneur;
+		return new SimpleStringProperty(preneur);
 	}
 
-	public void setPreneur(StringProperty preneur) {
+	public void setPreneur(String preneur) {
 		this.preneur = preneur;
 	}
 
 	public StringProperty getOffre() {
-		return offre;
+		return new SimpleStringProperty(offre);
 	}
 
-	public void setOffre(StringProperty offre) {
+	public void setOffre(String offre) {
 		this.offre = offre;
 	}
 
