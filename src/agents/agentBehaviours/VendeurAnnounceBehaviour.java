@@ -22,9 +22,21 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 	private int decrement;
 	
 	private HashMap<String, String> acheteurs;
+
+	private HashMap<String, String> acheteursPrecedents;
 	
 	private VendeurAgent agent;
 
+	
+	public VendeurAnnounceBehaviour(String prix, int timer, int increment, int decrement, VendeurAgent agent, HashMap<String, String> acheteursPrecedents) {
+		this.prix = prix;
+		this.timer = timer;
+		this.increment = increment;
+		this.decrement = decrement;
+		this.agent = agent;
+		acheteurs = new HashMap<String, String>();
+		this.acheteursPrecedents = acheteursPrecedents;
+	}
 	
 	public VendeurAnnounceBehaviour(String prix, int timer, int increment, int decrement, VendeurAgent agent) {
 		this.prix = prix;
@@ -33,6 +45,7 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 		this.decrement = decrement;
 		this.agent = agent;
 		acheteurs = new HashMap<String, String>();
+		this.acheteursPrecedents = new HashMap<String, String>();
 	}
 
 	@Override
@@ -55,6 +68,7 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 				agent.getController().addEncherisseur(e);
 			}
 		}
+		acheteursPrecedents.putAll(acheteurs);
 			if(compteur == 0) {
 				int prixInt = Integer.parseInt(prix)-decrement;
 				
@@ -62,12 +76,12 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 					prixInt = 0;
 				}
 				
-				myAgent.addBehaviour(new VendeurAnnounceBehaviour(Integer.toString(prixInt), timer, increment, decrement, agent));
+				myAgent.addBehaviour(new VendeurAnnounceBehaviour(Integer.toString(prixInt), timer, increment, decrement, agent, acheteursPrecedents));
 			}
 			
 			else if (compteur == 1) {
-				
 				for (String i : acheteurs.keySet()) {
+					acheteursPrecedents.remove(i);
 					//System.out.println("VendeurAnnounceBehaviour : " + i + ".");
 					ACLMessage rep_bid = new ACLMessage(ACLMessage.INFORM);
 					ACLMessage rep_bid2 = new ACLMessage(ACLMessage.INFORM);
@@ -77,7 +91,12 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 					myAgent.send(rep_bid);
 					myAgent.send(rep_bid2);
 				}
-				
+				ACLMessage rep_bid = new ACLMessage(ACLMessage.REJECT_PROPOSAL);;
+				for (String i : acheteursPrecedents.keySet()) {
+					//System.out.println("VendeurAnnounceBehaviour : " + i + ".");
+					rep_bid.addReceiver(new AID(i, AID.ISLOCALNAME));
+				}
+				myAgent.send(rep_bid);
 				myAgent.addBehaviour(new VendeurAttributeBehaviour(acheteurs, agent));
 			}
 			
@@ -92,7 +111,7 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 				}
 				
 				int prixInt = Integer.parseInt(prix)+increment;
-				myAgent.addBehaviour(new VendeurAnnounceBehaviour(Integer.toString(prixInt), timer, increment, decrement, agent));
+				myAgent.addBehaviour(new VendeurAnnounceBehaviour(Integer.toString(prixInt), timer, increment, decrement, agent, acheteursPrecedents));
 			}
 		finish = true;
 	}

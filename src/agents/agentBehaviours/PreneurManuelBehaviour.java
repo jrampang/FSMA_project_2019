@@ -21,8 +21,6 @@ public class PreneurManuelBehaviour extends Behaviour {
 	private int step = 0;
 	
 	private boolean finish = false;
-	private boolean biding = true;
-	private boolean updating = true;
 	private ACLMessage msgReceived;
 	private PreneurAgent owner;
 	
@@ -31,6 +29,7 @@ public class PreneurManuelBehaviour extends Behaviour {
 	private MessageTemplate informMT = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
 	private MessageTemplate apMT = MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL);
 	private MessageTemplate agreeMT = MessageTemplate.MatchPerformative(ACLMessage.AGREE);
+	private MessageTemplate rejectMT = MessageTemplate.MatchPerformative(ACLMessage.REJECT_PROPOSAL);
 	
 	public PreneurManuelBehaviour(PreneurAgent agent) {
 		owner = agent;
@@ -88,9 +87,21 @@ public class PreneurManuelBehaviour extends Behaviour {
 			System.out.println(owner.getMyName() + ": it's a to_give.");
 			System.out.println(owner.getMyName() + ": i received my fish.");
 		}
-		step++;
-		if(step > 100)
-			finish = true;
+		else {
+			block();
+		}
+		
+		msgReceived = owner.receive(rejectMT);
+		
+		if(msgReceived != null) {
+			String name = msgReceived.getSender().getName().substring(0, 2);
+			System.out.println(owner.getMyName() + ": msgReceived from " + name);
+			System.out.println(owner.getMyName() + ": it's a reject_proposal.");
+			System.out.println(owner.getMyName() + ": i lost the offer.");
+		}
+		else {
+			block();
+		}
 	}
 
 	@Override

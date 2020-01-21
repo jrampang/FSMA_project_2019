@@ -87,8 +87,7 @@ public class MarcheReceiveBehaviour extends Behaviour{
 			// i remove the seller
 			else if(msg.getPerformative() == ACLMessage.INFORM) {
 				System.out.println(marche.getMyName() + ": i received a rep_bid from " + agentName);
-				System.out.println(marche.getMyName() + ": i delete a new seller / offer.");
-				System.out.println(marche.getMyName() + ": i received as performative " + msg.getPerformative());
+				System.out.println(marche.getMyName() + ": i cancel his offer.");
 				if(marche.getVendeurs().containsKey(agentName)) {
 					Enchere e = marche.getVendeurs().get(agentName);
 					marche.deleteVendeur(agentName);

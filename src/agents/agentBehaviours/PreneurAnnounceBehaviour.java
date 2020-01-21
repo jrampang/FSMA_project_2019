@@ -57,13 +57,13 @@ public class PreneurAnnounceBehaviour extends Behaviour{
 						owner.updateEnchereList(e);
 						if(owner.getMode().contains("auto")) {
 							if(owner.getAutoController() != null) {
-								System.out.println(owner.getMyName() + ": I am on auto mode.");
+								//System.out.println(owner.getMyName() + ": I am on auto mode.");
 								owner.getAutoController().updateEnchere(e);
 							}
 						}
 						else if(owner.getMode().contains("manuel")) {
 							if(owner.getManuelController() != null) {
-								System.out.println(owner.getMyName() + ": I am on manuel mode.");
+								//System.out.println(owner.getMyName() + ": I am on manuel mode.");
 								owner.getManuelController().updateEnchere(e);
 							}
 						}
