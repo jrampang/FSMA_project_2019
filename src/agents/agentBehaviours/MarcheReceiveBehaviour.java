@@ -20,7 +20,7 @@ public class MarcheReceiveBehaviour extends Behaviour{
 	private ACLMessage answer = new ACLMessage(ACLMessage.INFORM);
 	private MarcheAgent marche;
 	
-	private boolean test = true;
+	private boolean test = false;
 	
 	public MarcheReceiveBehaviour(MarcheAgent agent) {
 		this.marche = agent;
@@ -28,7 +28,7 @@ public class MarcheReceiveBehaviour extends Behaviour{
 	
 	@Override
 	public void action() {
-		System.out.println("The market: I'm going to check if there is any seller available.");
+		//System.out.println("The market: I'm going to check if there is any seller available.");
 		
 		// if i don't have any functional seller(s)
 		// i create them

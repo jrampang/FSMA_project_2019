@@ -3,6 +3,8 @@ package controller;
 import java.io.IOException;
 
 import agents.PreneurAgent;
+import agents.agentBehaviours.PreneurAutoBehaviour;
+import agents.agentBehaviours.PreneurManuelBehaviour;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,7 +37,7 @@ public class PreneurChoixController {
 	@FXML
 	private ChoiceBox<String> mode;
 	
-	private static ObservableList<Enchere> list = FXCollections.observableArrayList();
+	private ObservableList<Enchere> list = FXCollections.observableArrayList();
 	
 	private String auto = "Mode Automatique";
 	
@@ -49,11 +51,11 @@ public class PreneurChoixController {
 		return list;
 	}
 
-	public static void setList(ObservableList<Enchere> inputList) {
+	public void setList(ObservableList<Enchere> inputList) {
 		list = inputList;
 	}
 	
-	public static void addEnchere(Enchere e) {
+	public void addEnchere(Enchere e) {
 		list.add(e);
 	}
 	
@@ -88,6 +90,7 @@ public class PreneurChoixController {
 							agent.setManuelController(fxmlloader.getController());
 							agent.getManuelController().setAgent(agent);
 							for(int i = 0; i < selectedEncheres.size(); i++) {
+								agent.getEnchereList().add(selectedEncheres.get(i));
 								agent.getManuelController().addEnchere(selectedEncheres.get(i));
 							};
 							agent.getStage().setScene(new Scene(root));
@@ -95,6 +98,7 @@ public class PreneurChoixController {
 						} catch (IOException error) {
 							error.printStackTrace();
 						}
+						agent.addBehaviour(new PreneurManuelBehaviour(agent));
 			    	}
 			    	else if(choice.contains("Mode Automatique")) {
 			    		agent.setMode("auto");
@@ -105,6 +109,7 @@ public class PreneurChoixController {
 							agent.setAutoController(fxmlloader.getController());
 							agent.getAutoController().setAgent(agent);
 							for(int i = 0; i < selectedEncheres.size(); i++) {
+								agent.getEnchereList().add(selectedEncheres.get(i));
 								agent.getAutoController().addEnchere(selectedEncheres.get(i));
 							};
 							agent.getStage().setScene(new Scene(root));
@@ -112,6 +117,7 @@ public class PreneurChoixController {
 						} catch (IOException error) {
 							error.printStackTrace();
 						}
+						agent.addBehaviour(new PreneurAutoBehaviour(agent));
 			    	}
 		    	}
 		    }
