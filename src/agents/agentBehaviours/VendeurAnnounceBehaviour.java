@@ -74,8 +74,7 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 					// and so i can send the OK and attribut to the buyer
 					System.out.println("VendeurAnnounceBehaviour : " + i);
 					ACLMessage rep_bid = new ACLMessage(ACLMessage.INFORM);
-					ACLMessage rep_bid_for_buyer = new ACLMessage(ACLMessage.INFORM);
-					rep_bid_for_buyer.addReceiver(new AID(i, AID.ISLOCALNAME));
+					rep_bid.addReceiver(new AID(i, AID.ISLOCALNAME));
 					rep_bid.addReceiver(new AID("Marche", AID.ISLOCALNAME));
 					rep_bid.setContent("OK");
 					myAgent.send(rep_bid);
