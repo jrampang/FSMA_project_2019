@@ -30,11 +30,11 @@ public class PreneurAnnounceBehaviour extends Behaviour{
 		if(asked == false) {
 			System.out.println("The buyer: I'm going to check the market if there is any offer available.");
 			query.addReceiver(new AID("Marche", AID.ISLOCALNAME));
-			myAgent.send(query);
+			owner.send(query);
 			asked = true;
 		}
 		
-		msgReceived = myAgent.receive();
+		msgReceived = owner.receive();
 		
 		// if i received a message
 		if(msgReceived != null) {

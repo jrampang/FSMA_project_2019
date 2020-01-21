@@ -77,13 +77,13 @@ public class PreneurChoixController {
 		    	System.out.println("j'ai choisi: " + choice);
 		    	mode.getScene().getWindow().hide();
 		    	if(choice.contains("Mode manuel")) {
+		    		agent.setMode("manuel");
 		    		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../agents/agentInterfaces/PreneurManuel.fxml"));
 					Parent root;
 					try {
 						root = fxmlloader.load();
-						agent.setManuelContoller(fxmlloader.getController());
-						agent.getManuelContoller().setAgent(agent);
-						//agent.getStage().setTitle(agent.getName());
+						agent.setManuelController(fxmlloader.getController());
+						agent.getManuelController().setAgent(agent);
 						agent.getStage().setScene(new Scene(root));
 						agent.getStage().show();
 					} catch (IOException e) {
@@ -91,13 +91,13 @@ public class PreneurChoixController {
 					}
 		    	}
 		    	else if(choice.contains("Mode Automatique")) {
+		    		agent.setMode("auto");
 		    		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../agents/agentInterfaces/PreneurAuto.fxml"));
 					Parent root;
 					try {
 						root = fxmlloader.load();
 						agent.setAutoController(fxmlloader.getController());
 						agent.getAutoController().setAgent(agent);
-						//agent.getStage().setTitle(agent.getName());
 						agent.getStage().setScene(new Scene(root));
 						agent.getStage().show();
 					} catch (IOException e) {

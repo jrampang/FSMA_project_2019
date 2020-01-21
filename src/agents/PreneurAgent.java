@@ -140,11 +140,19 @@ public class PreneurAgent extends Agent {
 		this.autoController = autoController;
 	}
 
-	public PreneurManuelController getManuelContoller() {
+	public PreneurManuelController getManuelController() {
 		return manuelController;
 	}
 
-	public void setManuelContoller(PreneurManuelController manuelContoller) {
+	public void setManuelController(PreneurManuelController manuelContoller) {
 		this.manuelController = manuelContoller;
+	}
+
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
 	}
 }
