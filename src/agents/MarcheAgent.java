@@ -49,7 +49,7 @@ public class MarcheAgent extends Agent {
 			// Printout the name
 		    System.out.println("My name is "+myName);
 		    
-		    //addBehaviour(new MarcheReceiveBehaviour(this));
+		    addBehaviour(new MarcheReceiveBehaviour(this));
 		    
 		    new Thread() {
 	            @Override
@@ -64,6 +64,7 @@ public class MarcheAgent extends Agent {
 								stage = new Stage();
 	    					    stage.setTitle(myName);
 	    					    stage.setScene(new Scene(root));
+	    					    stage.setResizable(false);
 	    					    stage.show();
 							} catch (IOException e) {
 								e.printStackTrace();

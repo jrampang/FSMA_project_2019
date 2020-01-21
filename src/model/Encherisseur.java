@@ -7,7 +7,7 @@ public class Encherisseur {
 	private String preneur;
 	private String offre;
 	private Enchere enchere;
-	
+
 	public Encherisseur(String preneur, String offre, Enchere enchere) {
 		super();
 		this.preneur = preneur;
@@ -39,5 +39,5 @@ public class Encherisseur {
 	public void setEnchere(Enchere enchere) {
 		this.enchere = enchere;
 	}
-	
+
 }

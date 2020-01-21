@@ -20,16 +20,36 @@ public class MarcheReceiveBehaviour extends Behaviour{
 	private ACLMessage answer = new ACLMessage(ACLMessage.INFORM);
 	private MarcheAgent marche;
 	
-	private boolean test = false;
+	private boolean test = true;
 	
-	public MarcheReceiveBehaviour(MarcheAgent a) {
-		this.marche = a;
+	public MarcheReceiveBehaviour(MarcheAgent agent) {
+		this.marche = agent;
 	}
 	
 	@Override
 	public void action() {
 		System.out.println("The market: I'm going to check if there is any seller available.");
-	
+		
+		// if i don't have any functional seller(s)
+		// i create them
+		// T_T
+		if(test) {
+			String V1 = "V1";
+			String V2 = "V2";
+			String V3 = "V3";
+			
+			marche.addVendeur(V1, new Enchere("1 lot de poisson", Integer.toString(20), V1));
+			MarcheController.addEnchere(new Enchere("1 lot de poisson", Integer.toString(20), V1));
+			
+			marche.addVendeur(V2, new Enchere("1 lot de poisson", Integer.toString(15), V2));
+			MarcheController.addEnchere(new Enchere("1 lot de poisson", Integer.toString(15), V2));
+			
+			marche.addVendeur(V3, new Enchere("1 lot de poisson", Integer.toString(25), V3));
+			MarcheController.addEnchere(new Enchere("1 lot de poisson", Integer.toString(25), V3));
+			
+			test = false;
+		}
+		
 		msg = myAgent.receive();
 		
 		// if i received a message
@@ -55,7 +75,7 @@ public class MarcheReceiveBehaviour extends Behaviour{
 			// if i received a to_rep_bid
 			// i remove the seller
 			else if(msg.getPerformative() == ACLMessage.INFORM) {
-				System.out.println("Market behaviour: i received a to_rep_bid.");
+				System.out.println("Market behaviour: i received a rep_bid.");
 				if(marche.getVendeurs().containsKey(agentName)) {
 					Enchere e = marche.getVendeurs().get(agentName);
 					marche.deleteVendeur(agentName);
@@ -67,11 +87,6 @@ public class MarcheReceiveBehaviour extends Behaviour{
 			else if(msg.getPerformative() == ACLMessage.QUERY_IF) {
 				System.out.println("Market behaviour: i received a request from a buyer.");
 				System.out.println("Buyer name: " + agentName);
-				
-				String testAgentName = "A1";
-				marche.addVendeur(testAgentName, new Enchere("1 lot de poisson", Integer.toString(20), testAgentName));
-				MarcheController.addEnchere(new Enchere("1 lot de poisson", Integer.toString(20), testAgentName));
-				
 				
 				if(marche.getVendeurs().size() > 0) {
 					answer.addReceiver(new AID(agentName, AID.ISLOCALNAME));
@@ -92,7 +107,6 @@ public class MarcheReceiveBehaviour extends Behaviour{
 						answer.setContentObject(null);
 						myAgent.send(answer);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
