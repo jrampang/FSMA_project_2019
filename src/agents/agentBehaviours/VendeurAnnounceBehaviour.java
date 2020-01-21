@@ -51,7 +51,7 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 			if (receive != null) {
 				compteur++;
 				acheteurs.put(receive.getSender().getName().toString().substring(0,2), prix);
-				Encherisseur e = new Encherisseur(receive.getSender().toString(), prix, agent.getEnchere());
+				Encherisseur e = new Encherisseur(receive.getSender().getName().toString().substring(0,2), prix, agent.getEnchere());
 				agent.getController().addEncherisseur(e);
 			}
 		}
@@ -68,16 +68,14 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 			else if (compteur == 1) {
 				
 				for (String i : acheteurs.keySet()) {
-					// i say to the market my offer is going to be attribut
-					// so he can delete it from his list
-					// he tell me he did it
-					// and so i can send the OK and attribut to the buyer
-					System.out.println("VendeurAnnounceBehaviour : " + i);
+					//System.out.println("VendeurAnnounceBehaviour : " + i + ".");
 					ACLMessage rep_bid = new ACLMessage(ACLMessage.INFORM);
+					ACLMessage rep_bid2 = new ACLMessage(ACLMessage.INFORM);
 					rep_bid.addReceiver(new AID(i, AID.ISLOCALNAME));
-					rep_bid.addReceiver(new AID("Marche", AID.ISLOCALNAME));
+					rep_bid2.addReceiver(new AID("Marche", AID.ISLOCALNAME));
 					rep_bid.setContent("OK");
 					myAgent.send(rep_bid);
+					myAgent.send(rep_bid2);
 				}
 				
 				myAgent.addBehaviour(new VendeurAttributeBehaviour(acheteurs, agent));

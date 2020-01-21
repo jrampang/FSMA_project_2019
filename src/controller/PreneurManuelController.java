@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import agents.PreneurAgent;
 import javafx.collections.FXCollections;
@@ -38,8 +39,10 @@ public class PreneurManuelController {
 		return list;
 	}
 
-	public void setList(ObservableList<Enchere> inputList) {
-		list = inputList;
+	public void setList(ArrayList<Enchere> inputList) {
+		if(!list.containsAll(inputList)) {
+			list = FXCollections.observableArrayList(inputList);
+		}
 	}
 	
 	public void addEnchere(Enchere e) {
@@ -49,7 +52,9 @@ public class PreneurManuelController {
 	public void updateEnchere(Enchere e) {
 		for(int i = 0; i < list.size(); i++) {
 			if(list.get(i).equals(e)) {
-				list.set(i, e);
+				if(list.get(i).getPrix() != e.getPrix()) {
+					list.set(i, e);
+				}
 			}
 		}
 	}
@@ -68,7 +73,8 @@ public class PreneurManuelController {
 		rencherir.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent event) {
-		        System.out.println("ManuelController: i have (surencherit).");
+		    	ObservableList<Enchere> selectedEncheres = tableView.getSelectionModel().getSelectedItems();
+		        System.out.println("ManuelController: i have (surencherit) sur: " + selectedEncheres);
 		    }
 		});
 	}

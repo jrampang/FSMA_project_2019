@@ -22,29 +22,30 @@ public class VendeurAttributeBehaviour extends Behaviour{
 	public void action() {
 		MessageTemplate mtreceived = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
 		ACLMessage received = myAgent.receive(mtreceived);
-		if(received != null && received.getAllReceiver() == myAgent) {
+		if(received != null) {
+			System.out.println("The market has deleted the offer i want to attribute");
 			for (String i : acheteurs.keySet()) {
 				ACLMessage msg = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
 				msg.addReceiver(new AID(i, AID.ISLOCALNAME));
 				myAgent.send(msg);
 			}
-			MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CONFIRM);
-			ACLMessage msg = myAgent.receive(mt);
-			if (msg != null && msg.getAllReceiver() == myAgent) {
-				ACLMessage response = new ACLMessage(ACLMessage.AGREE);
-				response.addReceiver(msg.getSender());
-				response.setContent("Poisson");
-				myAgent.send(response);
-				finish = true;
-			}
-			else {
-				block();
-			}
 		}
 		else {
 			block();
 		}
-
+		MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CONFIRM);
+		ACLMessage msg = myAgent.receive(mt);
+		if (msg != null) {
+			System.out.println("bou");
+			ACLMessage response = new ACLMessage(ACLMessage.AGREE);
+			response.addReceiver(new AID(msg.getSender().getName().substring(0, 2), AID.ISLOCALNAME));
+			response.setContent("Poisson");
+			myAgent.send(response);
+			finish = true;
+		}
+		else {
+			block();
+		}
 	}
 
 	@Override

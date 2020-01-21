@@ -1,6 +1,7 @@
 package agents.agentBehaviours;
 
 import java.io.IOException;
+import java.security.acl.Owner;
 import java.util.ArrayList;
 
 import agents.MarcheAgent;
@@ -18,7 +19,8 @@ public class MarcheReceiveBehaviour extends Behaviour{
 	private static final long serialVersionUID = 4066769460731071811L;
 	private boolean finish = false;
 	private ACLMessage msg;
-	private ACLMessage answer = new ACLMessage(ACLMessage.QUERY_REF);
+	private ACLMessage answer;
+	private ACLMessage confirm;
 	private MarcheAgent marche;
 	
 	private boolean test = false;
@@ -28,6 +30,8 @@ public class MarcheReceiveBehaviour extends Behaviour{
 	public MarcheReceiveBehaviour(MarcheAgent agent) {
 		this.marche = agent;
 		this.waitingBuyer = new ArrayList<>();
+		this.answer = new ACLMessage(ACLMessage.QUERY_REF);
+		this.confirm = new ACLMessage(ACLMessage.INFORM);
 	}
 	
 	@Override
@@ -102,7 +106,7 @@ public class MarcheReceiveBehaviour extends Behaviour{
 			// if i received a to_rep_bid
 			// i remove the seller
 			else if(msg.getPerformative() == ACLMessage.INFORM) {
-				System.out.println("Market behaviour: i received a rep_bid.");
+				System.out.println("Market behaviour: i received a rep_bid from " + agentName);
 				System.out.println("Market behaviour: i delete a new seller / offer.");
 				System.out.println("Market behaviour: i received as performative " + msg.getPerformative());
 				if(marche.getVendeurs().containsKey(agentName)) {
@@ -110,6 +114,8 @@ public class MarcheReceiveBehaviour extends Behaviour{
 					marche.deleteVendeur(agentName);
 					MarcheController.deleteEnchere(e);
 				}
+				confirm.addReceiver(new AID(agentName, AID.ISLOCALNAME));
+				marche.send(confirm);
 			}
 			// if i received a query_if
 			// i send to the buyer the available offers

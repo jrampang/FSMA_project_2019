@@ -7,6 +7,7 @@ import controller.PreneurManuelController;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
 import model.Enchere;
 
@@ -32,42 +33,40 @@ public class PreneurAnnounceBehaviour extends Behaviour{
 			query.addReceiver(new AID("Marche", AID.ISLOCALNAME));
 			owner.send(query);
 		}
-		
-		msgReceived = owner.receive();
+		MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.QUERY_REF);
+		msgReceived = owner.receive(mt);
 		
 		// if i received a message
 		if(msgReceived != null) {
 			// if i received a update
 			// from the market
 			// i update the my list of offers
-			if(msgReceived.getPerformative() == ACLMessage.QUERY_REF) {
-				//System.out.println("The buyer: I received an answer from the market.");
-				try {
-					if(msgReceived.getContentObject() != null) {
-						Enchere e = (Enchere) msgReceived.getContentObject();
-						if(!owner.getChoixController().getList().contains(e)) {
-							//owner.getEnchereList().add(e);
-							//System.out.println("The buyer: " + owner.getChoixController().getList());
-							if(owner.getChoixController() != null) {
-								//System.out.println("choixController isn't null");
-								owner.getChoixController().addEnchere(e);
-								owner.getChoixController().updateEnchere(e);
-							}
-							else {
-								//System.out.println("choixController is null");
-							}
+			//System.out.println("The buyer: I received an answer from the market.");
+			try {
+				if(msgReceived.getContentObject() != null) {
+					Enchere e = (Enchere) msgReceived.getContentObject();
+					if(!owner.getChoixController().getList().contains(e)) {
+						//owner.getEnchereList().add(e);
+						//System.out.println("The buyer: " + owner.getChoixController().getList());
+						if(owner.getChoixController() != null) {
+							//System.out.println("choixController isn't null");
+							owner.getChoixController().addEnchere(e);
+							owner.getChoixController().updateEnchere(e);
 						}
 						else {
-							owner.getChoixController().updateEnchere(e);
-							owner.updateEnchereList(e);
+							//System.out.println("choixController is null");
 						}
 					}
-				} catch (UnreadableException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					else {
+						owner.getChoixController().updateEnchere(e);
+						owner.updateEnchereList(e);
+					}
 				}
-				asked = true;
+			} catch (UnreadableException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			asked = true;
 		}
 		else {
 			block();
