@@ -9,7 +9,6 @@ public class Encherisseur {
 	private Enchere enchere;
 
 	public Encherisseur(String preneur, String offre, Enchere enchere) {
-		super();
 		this.preneur = preneur;
 		this.offre = offre;
 		this.enchere = enchere;
