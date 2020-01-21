@@ -44,7 +44,7 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 		myAgent.send(msg);
 		int compteur = 0;
 		long start = System.currentTimeMillis();
-		while(System.currentTimeMillis() - start < timer) {
+		while(System.currentTimeMillis() - start < timer*1000) {
 			MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.PROPOSE);
 			ACLMessage receive = myAgent.receive(mt);
 			
