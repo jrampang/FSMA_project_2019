@@ -8,6 +8,7 @@ import controller.PreneurAutoController;
 import controller.PreneurChoixController;
 import controller.PreneurManuelController;
 import jade.core.Agent;
+import jade.lang.acl.ACLMessage;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
@@ -36,6 +37,8 @@ public class PreneurAgent extends Agent {
 	
 	private PreneurAgent self;
 	
+	private ACLMessage to_bid = new ACLMessage(ACLMessage.PROPOSE);
+	
 	@Override
 	protected void setup() {
 		System.out.println("Hello! Agent "+getAID().getName()+" is ready.");
@@ -54,8 +57,6 @@ public class PreneurAgent extends Agent {
 		    System.out.println("My name is " + myName);
 		    System.out.println("My budget is " + budget);
 		    
-			addBehaviour(new PreneurAnnounceBehaviour(this));
-		    
 		    new Thread() {
 	            @Override
 	            public void run() {
@@ -73,6 +74,7 @@ public class PreneurAgent extends Agent {
 	    					    stage.setScene(new Scene(root));
 	    					    stage.setResizable(false);
 	    					    stage.show();
+	    						addBehaviour(new PreneurAnnounceBehaviour(self));
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
@@ -155,5 +157,13 @@ public class PreneurAgent extends Agent {
 
 	public void setMode(String mode) {
 		this.mode = mode;
+	}
+
+	public ACLMessage getTo_bid() {
+		return to_bid;
+	}
+
+	public void setTo_bid(ACLMessage to_bid) {
+		this.to_bid = to_bid;
 	}
 }
