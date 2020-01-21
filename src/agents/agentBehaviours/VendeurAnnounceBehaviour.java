@@ -37,8 +37,7 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 
 	@Override
 	public void action() {
-		VendeurController vc= agent.getController();
-		//.removeAllEncherisseurs();
+		agent.getController().removeAllEncherisseurs();
 		ACLMessage msg = new ACLMessage(ACLMessage.CFP);
 		msg.addReceiver(new AID("Marche", AID.ISLOCALNAME));
 		msg.setContent(prix);

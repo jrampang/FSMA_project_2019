@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
 
+import agents.agentBehaviours.VendeurAnnounceBehaviour;
 import controller.VendeurController;
 import controller.VendeurInitController;
 import jade.core.Agent;
@@ -106,6 +107,7 @@ public class VendeurAgent extends Agent {
 	
 	public void creerEnchere() {
 		enchere = new Enchere(controllerInit.getNom().getText(), controllerInit.getPrix().getText(), this.myName);
+		VendeurAgent self = this;
 		new JFXPanel();
 		Platform.runLater(new Runnable() {
 			@Override
@@ -127,6 +129,13 @@ public class VendeurAgent extends Agent {
 					stage2.setTitle(myName);
 					stage2.setScene(new Scene(root));
 					stage2.show();
+					addBehaviour(new VendeurAnnounceBehaviour(
+		    				controllerInit.getPrix().getText(),
+		    				Integer.parseInt(controllerInit.getTimer().getText()),
+		    				Integer.parseInt(controllerInit.getIncrement().getText()),
+		    				Integer.parseInt(controllerInit.getDecrement().getText()),
+		    				self
+		    		));	
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

@@ -100,13 +100,6 @@ public class VendeurInitController {
 		    	
 		    	if(agent != null) {
 		    		agent.creerEnchere();
-		    		agent.addBehaviour(new VendeurAnnounceBehaviour(
-		    				prix.getText(),
-		    				Integer.parseInt(timer.getText()),
-		    				Integer.parseInt(increment.getText()),
-		    				Integer.parseInt(decrement.getText()),
-		    				agent
-		    		));	
 		    	}
 		    	else {
 		    		System.out.println("VendeurInitController: agent is null.");
