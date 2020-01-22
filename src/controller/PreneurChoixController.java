@@ -101,6 +101,12 @@ public class PreneurChoixController {
 		    public void handle(ActionEvent event) {
 		    	ObservableList<Enchere> selectedEncheres = tableView.getSelectionModel().getSelectedItems();
 		    	if(selectedEncheres != null) {
+		    		int max = 0;
+		    		for (int i = 0; i<selectedEncheres.size(); i++) {
+		    			if (max < Integer.parseInt(selectedEncheres.get(i).getPrix())) {
+		    				max = Integer.parseInt(selectedEncheres.get(i).getPrix());
+		    			}
+		    		}
 		    		System.out.println(agent.getMyName() + ": Enchere clicked = " + selectedEncheres);
 		    		String choice = mode.getValue();
 			    	if(choice.contains("Mode manuel")) {
@@ -126,8 +132,8 @@ public class PreneurChoixController {
 						}
 						agent.addBehaviour(new PreneurManuelBehaviour(agent));
 			    	}
-			    	else if(choice.contains("Mode Automatique") && !budget.getText().isEmpty() && isInt(budget.getText())) {
-			    		System.out.println(agent.getMyName() + ": j'ai choisit " + choice);
+			    	else if(choice.contains("Mode Automatique") && !budget.getText().isEmpty() && isInt(budget.getText()) && budget.getText() == Integer.toString(max)) {
+			    		System.out.println(agent.getMyName() + ": j'ai choisi " + choice);
 			    		agent.setMode("auto");
 			    		//mode.getScene().getWindow().hide();
 			    		agent.getStage().hide();
