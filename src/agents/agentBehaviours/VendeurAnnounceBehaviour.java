@@ -1,5 +1,6 @@
 package agents.agentBehaviours;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import agents.VendeurAgent;
@@ -53,7 +54,12 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 		agent.getController().removeAllEncherisseurs();
 		ACLMessage msg = new ACLMessage(ACLMessage.CFP);
 		msg.addReceiver(new AID("Marche", AID.ISLOCALNAME));
-		msg.setContent(prix);
+		try {
+			msg.setContentObject(agent.getEnchere());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		myAgent.send(msg);
 		int compteur = 0;
 		long start = System.currentTimeMillis();
