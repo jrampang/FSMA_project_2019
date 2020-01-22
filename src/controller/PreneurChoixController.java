@@ -132,7 +132,7 @@ public class PreneurChoixController {
 						}
 						agent.addBehaviour(new PreneurManuelBehaviour(agent));
 			    	}
-			    	else if(choice.contains("Mode Automatique") && !budget.getText().isEmpty() && isInt(budget.getText()) && budget.getText() == Integer.toString(max)) {
+			    	else if(choice.contains("Mode Automatique") && !budget.getText().isEmpty() && isInt(budget.getText()) && Integer.parseInt(budget.getText()) >= max) {
 			    		System.out.println(agent.getMyName() + ": j'ai choisi " + choice);
 			    		agent.setMode("auto");
 			    		//mode.getScene().getWindow().hide();
