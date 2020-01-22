@@ -10,6 +10,7 @@ import jade.lang.acl.MessageTemplate;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import model.Enchere;
 
 public class PreneurManuelBehaviour extends Behaviour {
 
@@ -86,6 +87,7 @@ public class PreneurManuelBehaviour extends Behaviour {
 			System.out.println(owner.getMyName() + ": msgReceived from " + name);
 			System.out.println(owner.getMyName() + ": it's a to_give.");
 			System.out.println(owner.getMyName() + ": i received my fish.");
+			owner.getManuelController().updateState(name);
 		}
 		else {
 			block();

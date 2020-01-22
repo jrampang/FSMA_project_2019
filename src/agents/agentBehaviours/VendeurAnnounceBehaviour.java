@@ -88,6 +88,7 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 					rep_bid.addReceiver(new AID(i, AID.ISLOCALNAME));
 					rep_bid2.addReceiver(new AID("Marche", AID.ISLOCALNAME));
 					rep_bid.setContent("OK");
+					rep_bid2.setContent(prix);
 					myAgent.send(rep_bid);
 					myAgent.send(rep_bid2);
 				}
@@ -101,14 +102,15 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 			}
 			
 			else {
-				
-				for (String i : acheteurs.keySet()) {
-					ACLMessage rep_bid = new ACLMessage(ACLMessage.INFORM);
+				ACLMessage rep_bid = new ACLMessage(ACLMessage.INFORM);
+				ACLMessage rep_bid2 = new ACLMessage(ACLMessage.INFORM);
+				for (String i : acheteursPrecedents.keySet()) {
 					rep_bid.addReceiver(new AID(i, AID.ISLOCALNAME));
-					rep_bid.addReceiver(new AID("Marche", AID.ISLOCALNAME));
-					rep_bid.setContent("NOK");
-					myAgent.send(rep_bid);
 				}
+				rep_bid2.addReceiver(new AID("Marche", AID.ISLOCALNAME));
+				rep_bid.setContent("NOK");
+				rep_bid2.setContent(prix);
+				myAgent.send(rep_bid);
 				
 				int prixInt = Integer.parseInt(prix)+increment;
 				myAgent.addBehaviour(new VendeurAnnounceBehaviour(Integer.toString(prixInt), timer, increment, decrement, agent, acheteursPrecedents));

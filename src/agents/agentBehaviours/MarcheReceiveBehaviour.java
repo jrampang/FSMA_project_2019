@@ -1,7 +1,6 @@
 package agents.agentBehaviours;
 
 import java.io.IOException;
-import java.security.acl.Owner;
 import java.util.ArrayList;
 
 import agents.MarcheAgent;
@@ -30,8 +29,6 @@ public class MarcheReceiveBehaviour extends Behaviour{
 	public MarcheReceiveBehaviour(MarcheAgent agent) {
 		this.marche = agent;
 		this.waitingBuyer = new ArrayList<>();
-		this.answer = new ACLMessage(ACLMessage.QUERY_REF);
-		this.confirm = new ACLMessage(ACLMessage.INFORM);
 	}
 	
 	@Override
@@ -60,6 +57,7 @@ public class MarcheReceiveBehaviour extends Behaviour{
 					MarcheController.updateEnchere(new Enchere("1 lot de poisson", msg.getContent(), agentName));
 				}
 				if(this.waitingBuyer.size() > 0) {
+					this.answer = new ACLMessage(ACLMessage.QUERY_REF);
 					for(int i = 0; i < this.waitingBuyer.size(); i++) {
 						answer.addReceiver(new AID(this.waitingBuyer.get(i), AID.ISLOCALNAME));
 					}
@@ -89,12 +87,30 @@ public class MarcheReceiveBehaviour extends Behaviour{
 				System.out.println(marche.getMyName() + ": i received a rep_bid from " + agentName);
 				System.out.println(marche.getMyName() + ": i cancel his offer.");
 				if(marche.getVendeurs().containsKey(agentName)) {
-					Enchere e = marche.getVendeurs().get(agentName);
+					MarcheController.updateEnchere(new Enchere("OVER", msg.getContent(), agentName));
+					confirm = new ACLMessage(ACLMessage.INFORM);
+					confirm.addReceiver(new AID(agentName, AID.ISLOCALNAME));
+					marche.send(confirm);
+					
+					// I want to notify the buyer(s)
+					// that an offer is over
+					
+					System.out.println(marche.getMyName() + ": I want to notify the buyer(s) that an offer is over from" + agentName);
+					this.answer = new ACLMessage(ACLMessage.QUERY_REF);
+					for(int i = 0; i < this.waitingBuyer.size(); i++) {
+						answer.addReceiver(new AID(this.waitingBuyer.get(i), AID.ISLOCALNAME));
+					}
+					marche.getVendeurs().forEach((k,v)->{
+						try {
+							answer.setContentObject(new Enchere("OVER", msg.getContent(), agentName));
+							myAgent.send(answer);
+						} catch (IOException err) {
+							err.printStackTrace();
+						}
+					});
 					marche.deleteVendeur(agentName);
-					MarcheController.deleteEnchere(e);
 				}
-				confirm.addReceiver(new AID(agentName, AID.ISLOCALNAME));
-				marche.send(confirm);
+				
 			}
 			// if i received a query_if
 			// i send to the buyer(s) the available offers

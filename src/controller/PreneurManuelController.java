@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,6 +35,8 @@ public class PreneurManuelController {
 	private Button rencherir;
 	
 	private ObservableList<Enchere> list = FXCollections.observableArrayList();
+	
+	private ListView<Enchere> listV = new ListView<>();
 	
 	private PreneurAgent agent;
 
@@ -61,6 +64,14 @@ public class PreneurManuelController {
 		}
 	}
 	
+	public void updateState(String name) {
+		for(int i = 0; i < list.size(); i++) {
+			if(list.get(i).getVendeur().contains(name)) {
+				list.get(i).setObjet("WIN");
+			}
+		}
+	}
+	
 	public void setAgent(PreneurAgent agent) {
 		this.agent = agent;
 	}
@@ -76,18 +87,29 @@ public class PreneurManuelController {
 		    @Override
 		    public void handle(ActionEvent event) {
 		    	ObservableList<Enchere> selectedEncheres = tableView.getSelectionModel().getSelectedItems();
-		        System.out.println(agent.getMyName() + ": i have (surencherit) sur: " + selectedEncheres);
-		        if(selectedEncheres.size() > 1) {
-		        	System.out.println(agent.getMyName() + ": the functionality to handle multiple offers isn't implement yet.");
-		        }
-		        else{
-		        	System.out.println(agent.getMyName() + ": sending a to_bid manually.");
-		        	agent.setTo_bid(new ACLMessage(ACLMessage.PROPOSE));
-		        	agent.setOutbidBid(selectedEncheres.get(0));
-			        agent.getTo_bid().addReceiver(new AID(selectedEncheres.get(0).getVendeur(), AID.ISLOCALNAME));
-			        agent.send(agent.getTo_bid());
-			        //agent.setBiding(false);
-		        }
+		    	if(selectedEncheres != null) {
+		    		System.out.println(agent.getMyName() + ": I have choosen: " + selectedEncheres);
+		        	Enchere e = selectedEncheres.get(0);
+			        if(selectedEncheres.size() > 1) {
+			        	System.out.println(agent.getMyName() + ": the functionality to handle multiple offers isn't implement yet.");
+			        }
+			        else if(e != null) {
+			        	if(selectedEncheres.get(0).getObjet().contains("OVER")) {
+				        	System.out.println(agent.getMyName() + ": the offer is over, I can't choose it.");
+			    		}
+				        else{
+				        	System.out.println(agent.getMyName() + ": sending a to_bid manually.");
+				        	agent.setTo_bid(new ACLMessage(ACLMessage.PROPOSE));
+				        	agent.setOutbidBid(selectedEncheres.get(0));
+					        agent.getTo_bid().addReceiver(new AID(selectedEncheres.get(0).getVendeur(), AID.ISLOCALNAME));
+					        agent.send(agent.getTo_bid());
+					        //agent.setBiding(false);
+				        }
+		        	}
+			        else {
+			    		System.out.println(agent.getMyName() + ": no bid have been choosed.");
+			    	}
+		    	}
 		    }
 		});
 	}

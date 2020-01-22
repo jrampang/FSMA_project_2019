@@ -16,8 +16,13 @@ public class Enchere implements Serializable{
 	
 	public Enchere(String objet, String prix, String vendeur) {
 		this.objet = objet;
-		this.prix = prix;
 		this.vendeur = vendeur;
+		if(isInt(prix)) {
+			this.prix = prix;
+		}
+		else {
+			this.prix = "-1";
+		}
 	}
 	public String getObjet() {
 		return objet;
@@ -33,8 +38,27 @@ public class Enchere implements Serializable{
 	public String getPrix() {
 		return prix;
 	}
+	
+	public boolean isInt (String string) {
+		boolean valeur = true;
+		char[] tab = string.toCharArray();
+
+		for(char carac : tab){
+			if(!Character.isDigit(carac) && valeur){
+				valeur = false;
+			}
+		}
+
+		return valeur;
+	}
+	
 	public void setPrix(String prix) {
-		this.prix = prix;
+		if(isInt(prix)) {
+			this.prix = prix;
+		}
+		else {
+			this.prix = "-1";
+		}
 	}
 	
 	public StringProperty prixProperty() {

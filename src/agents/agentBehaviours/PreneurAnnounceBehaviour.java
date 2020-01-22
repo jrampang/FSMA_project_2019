@@ -19,7 +19,7 @@ public class PreneurAnnounceBehaviour extends Behaviour{
 	private boolean finish = false;
 	private boolean asked = false;
 	private ACLMessage msgReceived;
-	private ACLMessage query = new ACLMessage(ACLMessage.QUERY_IF);
+	private ACLMessage query;
 	private PreneurAgent owner;
 	
 	public PreneurAnnounceBehaviour(PreneurAgent agent) {
@@ -30,6 +30,7 @@ public class PreneurAnnounceBehaviour extends Behaviour{
 	public void action() {
 		//System.out.println("The buyer: I'm going to check the market if there is any offer available.");
 		if(asked == false) {
+			query = new ACLMessage(ACLMessage.QUERY_IF);
 			query.addReceiver(new AID("Marche", AID.ISLOCALNAME));
 			owner.send(query);
 		}
@@ -47,9 +48,14 @@ public class PreneurAnnounceBehaviour extends Behaviour{
 					Enchere e = (Enchere) msgReceived.getContentObject();
 					if(!owner.getChoixController().getList().contains(e)) {
 						if(owner.getChoixController() != null) {
-							owner.getChoixController().addEnchere(e);
-							owner.getChoixController().updateEnchere(e);
-							owner.updateEnchereList(e);
+							if(!e.getObjet().contains("OVER")) {
+								owner.getChoixController().addEnchere(e);
+								owner.getChoixController().updateEnchere(e);
+								owner.updateEnchereList(e);
+							}
+							else {
+								System.out.println(owner.getMyName() + ": I received an offer terminated.");
+							}
 						}
 					}
 					else {

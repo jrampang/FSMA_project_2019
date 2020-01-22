@@ -47,6 +47,14 @@ public class VendeurAgent extends Agent {
 	public void setController(VendeurController controller) {
 		this.controller = controller;
 	}
+	
+	public String getMyName() {
+		return myName;
+	}
+
+	public void setMyName(String myName) {
+		this.myName = myName;
+	}
 
 	@Override
 	protected void setup() {

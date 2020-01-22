@@ -52,6 +52,7 @@ public class PreneurAgent extends Agent {
 		if (args != null && args.length > 0) {
 			myName = (String) args[0];
 			
+			mode = "none";
 			self = this;
 			
 			// Printout the name
@@ -189,5 +190,13 @@ public class PreneurAgent extends Agent {
 
 	public void setOutbidBid(Enchere outbidBid) {
 		this.outbidBid = outbidBid;
+	}
+
+	public int getBudget() {
+		return budget;
+	}
+
+	public void setBudget(int budget) {
+		this.budget = budget;
 	}
 }
