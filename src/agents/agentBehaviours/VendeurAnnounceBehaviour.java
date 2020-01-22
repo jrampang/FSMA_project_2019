@@ -54,6 +54,7 @@ public class VendeurAnnounceBehaviour extends Behaviour{
 		agent.getController().removeAllEncherisseurs();
 		ACLMessage msg = new ACLMessage(ACLMessage.CFP);
 		msg.addReceiver(new AID("Marche", AID.ISLOCALNAME));
+		agent.getEnchere().setPrix(prix);
 		try {
 			msg.setContentObject(agent.getEnchere());
 		} catch (IOException e1) {

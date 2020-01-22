@@ -8,6 +8,6 @@
 </listAttribute>
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="jade.Boot"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-gui &quot;A1:agents.MarcheAgent(Marche);A2:agents.VendeurAgent(Vendeur1);A3:agents.VendeurAgent(Vendeur2);A4:agents.PreneurAgent(Preneur1);A5:agents.PreneurAgent(Preneur2);A6:agents.PreneurAgent(Preneur3)&quot;"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-gui &quot;Marche:agents.MarcheAgent(Marche);A1:agents.VendeurAgent(Vendeur1);A2:agents.VendeurAgent(Vendeur2);B1:agents.PreneurAgent(Preneur1);B2:agents.PreneurAgent(Preneur2)&quot;"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="FSMA_project_2019"/>
 </launchConfiguration>
