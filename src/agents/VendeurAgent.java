@@ -1,7 +1,4 @@
 package agents;
-
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.IOException;
 
 import agents.agentBehaviours.VendeurAnnounceBehaviour;
@@ -77,9 +74,6 @@ public class VendeurAgent extends Agent {
             		Platform.runLater(new Runnable() {
             			@Override
             			public void run() {
-            				Dimension _screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    	                    double _width = _screenSize.getWidth();
-    	                    double _height = _screenSize.getHeight();
     						Parent root;
 							try {
 								FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("agentInterfaces/VendeurInit.fxml"));
@@ -121,9 +115,6 @@ public class VendeurAgent extends Agent {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				Dimension _screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-                double _width = _screenSize.getWidth();
-                double _height = _screenSize.getHeight();
 				Parent root;
 				try {
 					/*root = FXMLLoader.load(getClass().getResource("agentInterfaces/VendeurInit.fxml"));

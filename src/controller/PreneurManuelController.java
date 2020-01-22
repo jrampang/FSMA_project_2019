@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import agents.PreneurAgent;
@@ -11,11 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -35,8 +30,6 @@ public class PreneurManuelController {
 	private Button rencherir;
 	
 	private ObservableList<Enchere> list = FXCollections.observableArrayList();
-	
-	private ListView<Enchere> listV = new ListView<>();
 	
 	private PreneurAgent agent;
 
@@ -64,10 +57,10 @@ public class PreneurManuelController {
 		}
 	}
 	
-	public void updateState(String name) {
+	public void updateState(String name, String state) {
 		for(int i = 0; i < list.size(); i++) {
 			if(list.get(i).getVendeur().contains(name)) {
-				list.get(i).setObjet("WIN");
+				list.get(i).setObjet(state);
 			}
 		}
 	}

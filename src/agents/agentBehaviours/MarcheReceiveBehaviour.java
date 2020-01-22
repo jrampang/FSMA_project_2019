@@ -8,6 +8,7 @@ import controller.MarcheController;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
 import model.Enchere;
 
 public class MarcheReceiveBehaviour extends Behaviour{
@@ -21,8 +22,6 @@ public class MarcheReceiveBehaviour extends Behaviour{
 	private ACLMessage answer;
 	private ACLMessage confirm;
 	private MarcheAgent marche;
-	
-	private boolean test = false;
 	
 	private ArrayList<String> waitingBuyer;
 	
@@ -45,40 +44,50 @@ public class MarcheReceiveBehaviour extends Behaviour{
 			// i add him and his offer
 			// or update his offer
 			if(msg.getPerformative() == ACLMessage.CFP) {
-				//System.out.println("Market behaviour: i received a to_announce.");
-				if(!marche.getVendeurs().containsKey(agentName)) {
-					System.out.println(marche.getMyName() + ": i add a new seller / offer.");
-					marche.addVendeur(agentName, new Enchere("1 lot de poisson", msg.getContent(), agentName));
-					MarcheController.addEnchere(new Enchere("1 lot de poisson", msg.getContent(), agentName));
-				}
-				else {
-					//System.out.println("Market behaviour: i update a seller / offer.");
-					marche.updateVendeur(agentName, new Enchere("1 lot de poisson", msg.getContent(), agentName));
-					MarcheController.updateEnchere(new Enchere("1 lot de poisson", msg.getContent(), agentName));
-				}
-				if(this.waitingBuyer.size() > 0) {
-					this.answer = new ACLMessage(ACLMessage.QUERY_REF);
-					for(int i = 0; i < this.waitingBuyer.size(); i++) {
-						answer.addReceiver(new AID(this.waitingBuyer.get(i), AID.ISLOCALNAME));
+				Enchere e;
+				try {
+					e = (Enchere) msg.getContentObject();
+					e.setVendeur(agentName);
+					//System.out.println("Market behaviour: i received a to_announce.");
+					if(!marche.getVendeurs().containsKey(agentName)) {
+						//System.out.println(marche.getMyName() + ": i add a new seller / offer.");
+						//System.out.println(marche.getMyName() + ": i received " + e);
+						marche.addVendeur(agentName, e);
+						MarcheController.addEnchere(e);
 					}
-					marche.getVendeurs().forEach((k,v)->{
-						try {
-							//System.out.println("Market test 2: " + v);
-							answer.setContentObject(v);
-							myAgent.send(answer);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+					else {
+						//System.out.println("Market behaviour: i update a seller / offer.");
+						//System.out.println(marche.getMyName() + ": i received " + e);
+						marche.updateVendeur(agentName, e);
+						MarcheController.updateEnchere(e);
+					}
+					if(this.waitingBuyer.size() > 0) {
+						this.answer = new ACLMessage(ACLMessage.QUERY_REF);
+						for(int i = 0; i < this.waitingBuyer.size(); i++) {
+							answer.addReceiver(new AID(this.waitingBuyer.get(i), AID.ISLOCALNAME));
 						}
-					});
-					try {
-						answer.setContentObject(null);
-						myAgent.send(answer);
-					} catch (IOException e) {
-						e.printStackTrace();
+						marche.getVendeurs().forEach((k,v)->{
+							try {
+								//System.out.println("Market test 2: " + v);
+								answer.setContentObject(v);
+								myAgent.send(answer);
+							} catch (IOException err) {
+								// TODO Auto-generated catch block
+								err.printStackTrace();
+							}
+						});
+						try {
+							answer.setContentObject(null);
+							myAgent.send(answer);
+						} catch (IOException err) {
+							err.printStackTrace();
+						}
+						//this.waitingBuyer.clear();
+						//System.out.println("Market: waiting buyers cleared.");
 					}
-					//this.waitingBuyer.clear();
-					//System.out.println("Market: waiting buyers cleared.");
+				} catch (UnreadableException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 			// if i received a to_rep_bid

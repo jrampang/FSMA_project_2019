@@ -20,7 +20,6 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import model.Enchere;
 
 public class PreneurChoixController {
@@ -132,9 +131,10 @@ public class PreneurChoixController {
 						}
 						agent.addBehaviour(new PreneurManuelBehaviour(agent));
 			    	}
-			    	else if(choice.contains("Mode Automatique") && !budget.getText().isEmpty() && isInt(budget.getText()) && Integer.parseInt(budget.getText()) >= max) {
+			    	else if(choice.contains("Mode Automatique") && !budget.getText().isEmpty() && isInt(budget.getText()) /*&& Integer.parseInt(budget.getText()) >= max*/) {
 			    		System.out.println(agent.getMyName() + ": j'ai choisi " + choice);
 			    		agent.setMode("auto");
+			    		agent.setBudget(Integer.parseInt(budget.getText()));
 			    		//mode.getScene().getWindow().hide();
 			    		agent.getStage().hide();
 			    		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../agents/agentInterfaces/PreneurAuto.fxml"));

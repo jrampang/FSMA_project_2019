@@ -41,6 +41,8 @@ public class PreneurAutoBehaviour extends Behaviour {
 					owner.getAutoController().updateEnchere(owner.getEnchereList().get(i));
 					String name = owner.getEnchereList().get(i).getVendeur();
 					int price = Integer.parseInt(owner.getEnchereList().get(i).getPrix());
+					System.out.println(owner.getMyName() + ": price " + price);
+					System.out.println(owner.getMyName() + ": budget " + owner.getBudget());
 					if(price <= owner.getBudget()) {
 						System.out.println(owner.getMyName() + ": i send a to_bid to: " + name);
 						to_bid.addReceiver(new AID(name, AID.ISLOCALNAME));
@@ -98,7 +100,7 @@ public class PreneurAutoBehaviour extends Behaviour {
 			System.out.println(owner.getMyName() + ": msgReceived from " + name);
 			System.out.println(owner.getMyName() + ": it's a to_give.");
 			System.out.println(owner.getMyName() + ": i received my fish.");
-			owner.getAutoController().updateState(name);
+			owner.getAutoController().updateState(name, "WIN");
 			finish = true;
 		}
 		else {
@@ -112,6 +114,7 @@ public class PreneurAutoBehaviour extends Behaviour {
 			System.out.println(owner.getMyName() + ": msgReceived from " + name);
 			System.out.println(owner.getMyName() + ": it's a reject_proposal.");
 			System.out.println(owner.getMyName() + ": i lost the offer.");
+			owner.getAutoController().updateState(name, "OVER / LOST");
 		}
 		else {
 			block();

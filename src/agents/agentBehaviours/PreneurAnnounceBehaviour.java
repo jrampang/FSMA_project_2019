@@ -1,9 +1,6 @@
 package agents.agentBehaviours;
 
 import agents.PreneurAgent;
-import controller.PreneurAutoController;
-import controller.PreneurChoixController;
-import controller.PreneurManuelController;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -76,7 +73,7 @@ public class PreneurAnnounceBehaviour extends Behaviour{
 					}
 				}
 				else {
-					System.out.println(owner.getMyName() + ": the market has send me all his offers.");
+					//System.out.println(owner.getMyName() + ": the market has send me all his offers.");
 				}
 			} catch (UnreadableException e) {
 				e.printStackTrace();

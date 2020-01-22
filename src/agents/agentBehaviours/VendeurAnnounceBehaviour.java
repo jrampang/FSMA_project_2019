@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import agents.VendeurAgent;
-import controller.VendeurController;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;

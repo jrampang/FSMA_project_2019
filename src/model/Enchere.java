@@ -69,6 +69,10 @@ public class Enchere implements Serializable{
 		return vendeur;
 	}
 	
+	public void setVendeur(String vendeur) {
+		this.vendeur = vendeur;
+	}
+	
 	public StringProperty vendeurProperty() {
 		return new SimpleStringProperty(vendeur);
 	}

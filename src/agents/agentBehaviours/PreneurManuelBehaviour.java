@@ -1,16 +1,10 @@
 package agents.agentBehaviours;
 
-import java.io.IOException;
-
 import agents.PreneurAgent;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import model.Enchere;
 
 public class PreneurManuelBehaviour extends Behaviour {
 
@@ -18,8 +12,6 @@ public class PreneurManuelBehaviour extends Behaviour {
 	 * 
 	 */
 	private static final long serialVersionUID = 8056054096804068926L;
-	
-	private int step = 0;
 	
 	private boolean finish = false;
 	private ACLMessage msgReceived;
@@ -87,7 +79,7 @@ public class PreneurManuelBehaviour extends Behaviour {
 			System.out.println(owner.getMyName() + ": msgReceived from " + name);
 			System.out.println(owner.getMyName() + ": it's a to_give.");
 			System.out.println(owner.getMyName() + ": i received my fish.");
-			owner.getManuelController().updateState(name);
+			owner.getManuelController().updateState(name, "WIN");
 		}
 		else {
 			block();
@@ -100,6 +92,7 @@ public class PreneurManuelBehaviour extends Behaviour {
 			System.out.println(owner.getMyName() + ": msgReceived from " + name);
 			System.out.println(owner.getMyName() + ": it's a reject_proposal.");
 			System.out.println(owner.getMyName() + ": i lost the offer.");
+			owner.getManuelController().updateState(name, "OVER / LOST");
 		}
 		else {
 			block();

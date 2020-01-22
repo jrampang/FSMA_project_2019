@@ -43,12 +43,16 @@ public class PreneurAutoController {
 		}
 	}
 	
-	public void updateState(String name) {
+	public void updateState(String name, String state) {
 		for(int i = 0; i < list.size(); i++) {
 			if(list.get(i).getVendeur().contains(name)) {
-				list.get(i).setObjet("WIN");
+				list.get(i).setObjet(state);
 			}
 		}
+	}
+	
+	public PreneurAgent getAgent() {
+		return this.agent;
 	}
 	
 	public void setAgent(PreneurAgent agent) {

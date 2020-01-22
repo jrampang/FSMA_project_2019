@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import agents.agentBehaviours.MarcheReceiveBehaviour;
-import controller.MarcheController;
-import controller.PreneurChoixController;
 import jade.core.Agent;
 
 import javafx.application.Platform;
@@ -25,21 +23,17 @@ public class MarcheAgent extends Agent {
 	protected int step = 0;
 	protected boolean finish = false;
 	
-	// Max 2 vendeurs en theorie
+	// Maximum 2 vendeurs en theorie
 	private HashMap<String, Enchere> vendeurAgentList;
-	//private ArrayList<String> preneurAgentList;
 	
 	private Parent root;
 	private Stage stage;
-	
-	private MarcheController controller;
 	
 	@Override
 	protected void setup() {
 		System.out.println("Hello! Agent "+getAID().getName()+" is ready.");
 		
 		vendeurAgentList = new HashMap<>();
-		//preneurAgentList = new ArrayList<>();
 		
 		// Get the name of the agent as a start-up argument
 		Object[] args = getArguments();
@@ -74,37 +68,6 @@ public class MarcheAgent extends Agent {
             		});
 	            }
 	        }.start();
-	        /*Thread update = new Thread(new Runnable() {
-
-	            @Override
-	            public void run() {
-	                Runnable updater = new Runnable() {
-
-	                    @Override
-	                    public void run() {
-
-	                        //System.out.println("from the marche" + getVendeurs());
-
-	                        System.out.println(myName + ": Ce message s'affiche en boucle.");
-	                        addEnchere(new Enchere("enchere", "prix"));
-	                    }
-	                };
-
-	                while (true) {
-	                    try {
-	                        Thread.sleep(1000);
-	                    } catch (InterruptedException ex) {
-	                    }
-
-	                    // UI update is run on the Application thread
-	                    Platform.runLater(updater);
-	                }
-	            }
-
-	        });
-	        // don't let thread prevent JVM shutdown
-	        update.setDaemon(true);
-	        update.start();*/
 		}
 		else {
 			// Make the agent terminate
